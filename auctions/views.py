@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User, AuctionListing, Bid, WatchList
+from .forms import NewListingsForm
 
 
 def index(request):
@@ -13,6 +14,24 @@ def index(request):
                   "auctions/index.html", {
                       "listings": active_listings
                   })
+
+
+def new_listing_view(request):
+    """
+    docstring
+    """
+    if request.user.is_authenticated and not request.user.is_anonymous:
+        if request.method == 'POST':
+            print("Under construction")
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            form = NewListingsForm()
+            return render(request,
+                          "auctions/new_listing_form.html",
+                          {"form": form})
+    else:
+        return render(request,
+                      "auctions/login.html")
 
 
 def login_view(request):
