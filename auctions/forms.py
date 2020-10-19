@@ -1,5 +1,5 @@
 from django import forms
-#from .models import Category
+from .models import Category
 
 
 class NewListingsForm (forms.Form):
@@ -16,5 +16,6 @@ class NewListingsForm (forms.Form):
                                       required=True)
     image_url = forms.URLField(label='Image URL', required=False)
     active = forms.BooleanField(label="Activate", required=False)
-    # category = forms.ModelChoiceField(
-    #     queryset=Catgory.objects.all(),  required=False)
+    # Hmm I'm not sure i like this
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),  required=False, blank=True)

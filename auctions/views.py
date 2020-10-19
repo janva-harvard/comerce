@@ -19,18 +19,18 @@ def index(request):
 def new_listing_view(request):
     if request.user.is_authenticated and not request.user.is_anonymous:
         if request.method == 'POST':
-            print(request.POST['active'])
             # refactor later
             # store_post_to_db(request.POST)
             new_listing = AuctionListing(
                 title=request.POST['title'],
                 description=request.POST['description'],
+                category=request.category,
                 starting_bid=request.POST['starting_bid'],
                 # Hmm might need to check if this exists or not
                 # take happy path for now
                 image_url=request.POST['image_url'],
                 active=True if request.POST['active'] == "on" else False,
-                owner=request.user
+                owner=request.user,
             )
 
             new_listing.save()

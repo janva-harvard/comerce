@@ -10,6 +10,13 @@ class User(AbstractUser):
 # user1 = User()
 
 
+class Category (models.Model):
+    name = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.name
+
+
 class AuctionListing(models.Model):
     """
     docstring
@@ -20,6 +27,10 @@ class AuctionListing(models.Model):
     image_url = models.URLField(max_length=200, blank=True, default=None)
     active = models.BooleanField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category,
+                                 on_delete=models.CASCADE,
+                                 blank=True,
+                                 default=None)
 
 
 class Bid (models.Model):
@@ -40,8 +51,3 @@ class WatchList (models.Model):
 #     docstring
 #     """
 #     pass
-
-
-# class Category (models.Model):
-#     pass
-#
