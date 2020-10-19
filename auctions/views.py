@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, AuctionListing, Bid, WatchList
+from .models import User, AuctionListing, Bid, WatchList, Category
 from .forms import NewListingsForm
 
 
@@ -21,16 +21,19 @@ def new_listing_view(request):
         if request.method == 'POST':
             # refactor later
             # store_post_to_db(request.POST)
+            # use cleaned data
+
             new_listing = AuctionListing(
                 title=request.POST['title'],
                 description=request.POST['description'],
-                category=request.category,
                 starting_bid=request.POST['starting_bid'],
                 # Hmm might need to check if this exists or not
                 # take happy path for now
                 image_url=request.POST['image_url'],
-                active=True if request.POST['active'] == "on" else False,
+                # active=True if request.POST['active'] == "on" else False,
+                active='active' in request.POST,
                 owner=request.user,
+                category=Category.objects.get(id=request.POST['category']),
             )
 
             new_listing.save()

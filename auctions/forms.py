@@ -15,7 +15,13 @@ class NewListingsForm (forms.Form):
                                       decimal_places=2,
                                       required=True)
     image_url = forms.URLField(label='Image URL', required=False)
-    active = forms.BooleanField(label="Activate", required=False)
+
+    active = forms.BooleanField(label="Activate",
+                                required=False,
+                                initial=False,
+                                )
     # Hmm I'm not sure i like this
     category = forms.ModelChoiceField(
-        queryset=Category.objects.all(),  required=False, blank=True)
+        queryset=Category.objects.all(),
+        required=False,
+        blank=True)
