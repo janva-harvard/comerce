@@ -1,5 +1,6 @@
 {% extends "auctions/layout.html" %} {% block body %}
-<h1>Listing</h1>
+<h1>Listings by category</h1>
+{% for listing in listings %}
 <ul>
   <li>{{ listing.title }}</li>
   <li>{{ listing.description }}</li>
@@ -16,10 +17,4 @@
   <li>{% if listing.active %}Active {% endif %}</li>
   <li>{% if listing.category %}{{ listing.category.name }} {% endif %}</li>
 </ul>
-{% comment %} could maybe have a checkbox for this purpose {% endcomment %}
-
-<button>Watch</button>
-<button>Unwatch</button>
-<button>Bid</button>
-
-{% endblock body %}
+{% endfor %} {% endblock %}

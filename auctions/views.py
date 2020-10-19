@@ -16,10 +16,29 @@ def index(request):
                   })
 
 
+def category_listing_view(request, id):
+    category = Category.objects.get(pk=id)
+    print("+++++++++++++++++++++++++++++++++++++++++")
+    print(category.name)
+    print(category.listings.all())
+    return render(request,
+                  "auctions/category_listing.html",
+                  {"listings": category.listings.all()})
+
+
 def listing_view(request, id):
     return render(request,
                   "auctions/listing.html",
                   {"listing": AuctionListing.objects.get(pk=id)})
+
+
+def categories_view(request):
+
+    return render(request,
+                  "auctions/categories.html",
+                  {
+                      "categories": Category.objects.all()
+                  })
 
 
 def new_listing_view(request):
