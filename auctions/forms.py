@@ -7,13 +7,14 @@ class NewListingsForm (forms.Form):
                             max_length=20,
                             required=True)
     description = forms.CharField(label='Description',
+                                  widget=forms.Textarea,
                                   max_length=200,
                                   required=True)
     starting_bid = forms.DecimalField(label="Starting bid",
                                       max_digits=5,
                                       decimal_places=2,
                                       required=True)
-    img_url = forms.URLField(label='Image URL', required=False)
-    activated = forms.BooleanField(label="Activate", required=False)
+    image_url = forms.URLField(label='Image URL', required=False)
+    active = forms.BooleanField(label="Activate", required=False)
     # category = forms.ModelChoiceField(
     #     queryset=Catgory.objects.all(),  required=False)
