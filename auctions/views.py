@@ -16,6 +16,12 @@ def index(request):
                   })
 
 
+def listing_view(request, id):
+    return render(request,
+                  "auctions/listing.html",
+                  {"listing": AuctionListing.objects.get(pk=id)})
+
+
 def new_listing_view(request):
     if request.user.is_authenticated and not request.user.is_anonymous:
         if request.method == 'POST':

@@ -18,5 +18,6 @@
     <li>{% if listing.active %}Active {% endif %}</li>
     <li>{% if listing.category %}{{ listing.category.name }} {% endif %}</li>
   </ul>
+  <a href=" {% url 'listing' listing.id %}">Detailes</a>
 </div>
 {% endfor %} {% endblock %}
