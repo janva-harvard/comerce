@@ -2,12 +2,12 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-class User(AbstractUser):
-    pass
-
 #  listing1 = Auction_listing(title="item", description="some item desceription",
 #   starting_bid=10.00, image_url="http://test.com", active=True, owner= user1)
 # user1 = User()
+
+class User(AbstractUser):
+    pass
 
 
 class Category (models.Model):
@@ -39,9 +39,15 @@ class Bid (models.Model):
     bidder = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="bidders")
 
+# hmm would maybe be nicer with a many-to-many in user but
+# then i get circlur dependency between AuctionListing and user
+# and need a make one off them know to the other before decalaring
+# actual class
+
 
 class WatchList (models.Model):
-    watcher = models.ForeignKey(User, on_delete=models.CASCADE)
+    watcher = models.ForeignKey(
+        User, on_delete=models.CASCADE)
     listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)
 
 # class Comment(models.Model):

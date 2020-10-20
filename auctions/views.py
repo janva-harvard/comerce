@@ -19,9 +19,6 @@ def index(request):
 
 def category_listing_view(request, id):
     category = Category.objects.get(pk=id)
-    print("+++++++++++++++++++++++++++++++++++++++++")
-    print(category.name)
-    print(category.listings.all())
     return render(request,
                   "auctions/category_listing.html",
                   {"listings": category.listings.all()})
@@ -54,6 +51,11 @@ def listing_view(request, id):
                   {"listing": AuctionListing.objects.get(pk=id),
                    "highest_bid": highest_bid()['amount__max'],
                    "form": BidForm()})
+
+
+def watchlist_view(request, id):
+    return render(request, "auctions/watchlist.html", {})
+    pass
 
 
 def categories_view(request):
