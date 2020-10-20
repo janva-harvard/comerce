@@ -25,3 +25,7 @@ class NewListingsForm (forms.Form):
         queryset=Category.objects.all(),
         required=False,
         blank=True)
+
+
+class BidForm(forms.Form):
+    amount = forms.DecimalField(decimal_places=2, required=True, min_value=0.0)

@@ -3,16 +3,17 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
+from django.contrib.auth.decorators import login_required
+from django.db.models import Max
 from .models import User, AuctionListing, Bid, WatchList, Category
-from .forms import NewListingsForm
+from .forms import NewListingsForm, BidForm
 
 
 def index(request):
     active_listings = AuctionListing.objects.filter(active=True)
     return render(request,
                   "auctions/index.html", {
-                      "listings": active_listings
+                      "listings": active_listings,
                   })
 
 
@@ -26,10 +27,33 @@ def category_listing_view(request, id):
                   {"listings": category.listings.all()})
 
 
+def highest_bid():
+    # needt to make shore that there are existing bids
+    return Bid.objects.aggregate(Max('amount'))
+
+
 def listing_view(request, id):
+    if request.method == "POST":
+
+        posted_form = BidForm(request.POST)
+        if posted_form.is_valid():
+            user = User.objects.get(pk=request.user.id)
+            listing = AuctionListing.objects.get(pk=id)
+            amount = posted_form.cleaned_data["amount"]
+            print(highest_bid())
+            if(amount > highest_bid()['amount__max']):
+                new_highest_bid = Bid(
+                    amount=amount, for_listing=listing, bidder=user)
+                new_highest_bid.save()
+                # should check wether logged in or not as well
+            # check if this is higher than highest bid so far
+            # if so push to db
+            # else show warning
     return render(request,
                   "auctions/listing.html",
-                  {"listing": AuctionListing.objects.get(pk=id)})
+                  {"listing": AuctionListing.objects.get(pk=id),
+                   "highest_bid": highest_bid()['amount__max'],
+                   "form": BidForm()})
 
 
 def categories_view(request):
@@ -41,6 +65,7 @@ def categories_view(request):
                   })
 
 
+@login_required
 def new_listing_view(request):
     if request.user.is_authenticated and not request.user.is_anonymous:
         if request.method == 'POST':

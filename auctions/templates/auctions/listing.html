@@ -16,10 +16,15 @@
   <li>{% if listing.active %}Active {% endif %}</li>
   <li>{% if listing.category %}{{ listing.category.name }} {% endif %}</li>
 </ul>
+Current highest bid: {{highest_bid}}
+<form action="{% url 'listing' listing.id %}" method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <input class="btn btn-primary" type="submit" value="Place bid" />
+</form>
+</div>
 {% comment %} could maybe have a checkbox for this purpose {% endcomment %}
 
 <button>Watch</button>
 <button>Unwatch</button>
-<button>Bid</button>
 
 {% endblock body %}
