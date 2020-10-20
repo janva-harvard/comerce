@@ -47,7 +47,7 @@ class Bid (models.Model):
 
 class WatchList (models.Model):
     watcher = models.ForeignKey(
-        User, on_delete=models.CASCADE)
+        User, on_delete=models.CASCADE, related_name="watchlists")
     listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)
 
 # class Comment(models.Model):

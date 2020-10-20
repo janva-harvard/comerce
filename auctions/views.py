@@ -54,8 +54,12 @@ def listing_view(request, id):
 
 
 def watchlist_view(request, id):
-    return render(request, "auctions/watchlist.html", {})
-    pass
+    # find watch items associated with this id
+    usr = User.objects.get(pk=id)
+    watchlsts = usr.watchlists.all()
+    return render(request, "auctions/watchlist.html", {
+        "listings": watchlsts
+    })
 
 
 def categories_view(request):
