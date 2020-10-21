@@ -58,7 +58,7 @@ def watchlist_view(request, id):
     usr = User.objects.get(pk=id)
     watchlsts = usr.watchlists.all()
     return render(request, "auctions/watchlist.html", {
-        "listings": watchlsts
+        "watchlists": watchlsts
     })
 
 
