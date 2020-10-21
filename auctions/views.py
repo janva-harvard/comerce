@@ -31,13 +31,11 @@ def highest_bid():
 
 def listing_view(request, id):
     if request.method == "POST":
-
         posted_form = BidForm(request.POST)
         if posted_form.is_valid():
             user = User.objects.get(pk=request.user.id)
             listing = AuctionListing.objects.get(pk=id)
             amount = posted_form.cleaned_data["amount"]
-            print(highest_bid())
             if(amount > highest_bid()['amount__max']):
                 new_highest_bid = Bid(
                     amount=amount, for_listing=listing, bidder=user)
@@ -50,20 +48,38 @@ def listing_view(request, id):
                   "auctions/listing.html",
                   {"listing": AuctionListing.objects.get(pk=id),
                    "highest_bid": highest_bid()['amount__max'],
-                   "form": BidForm()})
+                   "form": BidForm(),
+                   })
 
 
 def watchlist_view(request, id):
-    # find watch items associated with this id
     usr = User.objects.get(pk=id)
     watchlsts = usr.watchlists.all()
+
+    if request.method == "POST":
+        id_of_lst_to_watch = request.POST["lst_id"]
+        listing_to_watch = AuctionListing.objects.get(pk=id_of_lst_to_watch)
+        # Hmm can i found out if when this commes back  so i can warn
+        obj = WatchList.objects.get_or_create(
+            watcher=usr, listing=listing_to_watch
+        )
+        if (obj[1]):
+            print("created new obj")
+
+        # if listing_to_watch not in watchlsts.values('listing'):
+        #     print(listing_to_watch)
+        #     print(watchlsts.values('id'))
+        #     watchlist = WatchList(watcher=usr, listing=listing_to_watch)
+        #     watchlist.save()
+
+    # gettting
+
     return render(request, "auctions/watchlist.html", {
         "watchlists": watchlsts
     })
 
 
 def categories_view(request):
-
     return render(request,
                   "auctions/categories.html",
                   {
@@ -71,7 +87,7 @@ def categories_view(request):
                   })
 
 
-@login_required
+@ login_required
 def new_listing_view(request):
     if request.user.is_authenticated and not request.user.is_anonymous:
         if request.method == 'POST':
