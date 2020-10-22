@@ -25,9 +25,14 @@ Current highest bid: {{highest_bid}}
 {% comment %} could maybe have a checkbox for this purpose {% endcomment %}
 <form action="{% url 'watchlist' user.id %}" method= "post">
 {% csrf_token %}
-  <input class="btn btn-primary" type="submit" value="Watch">
+  {% if is_watched %}
   <input class="btn btn-primary" type="submit" value="UnWatch">
+{% else %}
+  <input class="btn btn-primary" type="submit" value="Watch">
+{% endif %}
+
   <input type="hidden" name="lst_id" value={{ listing.id }} >
+  <input type="hidden" name="already_watched" value={{ is_watched }} >
 </form>
 
 {% endblock body %}

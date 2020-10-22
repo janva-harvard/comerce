@@ -29,6 +29,9 @@ class AuctionListing(models.Model):
                                  blank=True,
                                  default=None,
                                  related_name="listings")
+    watchers = models.ManyToManyField(User,
+                                      blank=True,
+                                      related_name="watched_listings")
 
 
 class Bid (models.Model):
@@ -45,10 +48,10 @@ class Bid (models.Model):
 # actual class
 
 
-class WatchList (models.Model):
-    watcher = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="watchlists")
-    listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)
+# class WatchList (models.Model):
+#     watcher = models.ForeignKey(
+#         User, on_delete=models.CASCADE, related_name="watchlists")
+#     listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)
 
 # class Comment(models.Model):
 #     """

@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
-from .models import User, AuctionListing, Bid, WatchList, Category
+from .models import User, AuctionListing, Bid, Category
 from .forms import NewListingsForm, BidForm
 
 
@@ -44,38 +44,50 @@ def listing_view(request, id):
             # check if this is higher than highest bid so far
             # if so push to db
             # else show warning
+    viewed_listing = AuctionListing.objects.get(pk=id)
+    print(viewed_listing.watchers.all())
+    print("-------------")
+    print(User.objects.get(pk=request.user.id))
+    print(User.objects.get(pk=request.user.id)
+          in viewed_listing.watchers.all())
     return render(request,
                   "auctions/listing.html",
-                  {"listing": AuctionListing.objects.get(pk=id),
+                  {"listing": viewed_listing,
                    "highest_bid": highest_bid()['amount__max'],
                    "form": BidForm(),
-                   })
+                   "is_watched": User.objects.get(pk=request.user.id)
+                   in viewed_listing.watchers.all()})
 
 
 def watchlist_view(request, id):
     usr = User.objects.get(pk=id)
-    watchlsts = usr.watchlists.all()
+    watchlsts = usr.watched_listings.all()
 
     if request.method == "POST":
-        id_of_lst_to_watch = request.POST["lst_id"]
-        listing_to_watch = AuctionListing.objects.get(pk=id_of_lst_to_watch)
-        # Hmm can i found out if when this commes back  so i can warn
-        obj = WatchList.objects.get_or_create(
-            watcher=usr, listing=listing_to_watch
-        )
-        if (obj[1]):
-            print("created new obj")
-
-        # if listing_to_watch not in watchlsts.values('listing'):
-        #     print(listing_to_watch)
-        #     print(watchlsts.values('id'))
-        #     watchlist = WatchList(watcher=usr, listing=listing_to_watch)
-        #     watchlist.save()
-
-    # gettting
+        watched_listing = AuctionListing.objects.get(
+            pk=request.POST["lst_id"])
+        # if not already watch add user to wathcers in listing
+        if request.POST["already_watched"] == 'True':
+            user_watching = User.objects.get(pk=request.user.id)
+            watched_listing.watchers.remove(user_watching)
+        else:
+            user_watching = User.objects.get(pk=request.user.id)
+            watched_listing.watchers.add(user_watching)
+            print(user_watching)
+            print(watched_listing)
+            print(watched_listing.watchers.all())
+            watched_listing.save()
+            # id_of_lst_to_watch = request.POST["lst_id"]
+            # listing_to_watch = AuctionListing.objects.get(pk=id_of_lst_to_watch)
+            # # Hmm can i found out if when this commes back  so i can warn
+            # obj = WatchList.objects.get_or_create(
+            #     watcher=usr, listing=listing_to_watch
+            # )
+            # if (obj[1]):
+            #     print("created new obj")
 
     return render(request, "auctions/watchlist.html", {
-        "watchlists": watchlsts
+        "listings": watchlsts
     })
 
 
