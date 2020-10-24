@@ -24,39 +24,77 @@ def category_listing_view(request, id):
                   {"listings": category.listings.all()})
 
 
-def highest_bid():
-    # needt to make shore that there are existing bids
-    return Bid.objects.aggregate(Max('amount'))
+def highest_bid_for(listing):
+    bids = listing.bids
+    # make sure such on object exist maybe
+    return bids.all().order_by('-amount')[0]
+    # could I exist or stor  pattern
+    # return Bid.objects.aggregate(Max('amount'))
 
 
 def listing_view(request, id):
+    error_msg = None
+
     if request.method == "POST":
-        posted_form = BidForm(request.POST)
-        if posted_form.is_valid():
-            user = User.objects.get(pk=request.user.id)
-            listing = AuctionListing.objects.get(pk=id)
-            amount = posted_form.cleaned_data["amount"]
-            if(amount > highest_bid()['amount__max']):
-                new_highest_bid = Bid(
-                    amount=amount, for_listing=listing, bidder=user)
-                new_highest_bid.save()
-                # should check wether logged in or not as well
-            # check if this is higher than highest bid so far
-            # if so push to db
-            # else show warning
+        print('closeauction' in request.POST)
+        print('------------------------------------------------')
+        # A bit contrieved way of doing things
+        if 'closeauction' in request.POST:
+            # request.POST['closeauction'] == 'True':
+            # close auction by inactivating the post
+            # Continue here need to find the user with
+            # highest bid
+            print('+++++++++++++++++closing auction+++++++++++++++')
+            pass
+            # user = User.objects.get(pk=request.user.id)
+            # print(request.POST['lst_id'])
+            # listing = AuctionListing.objects.get(pk=request.POST['lst_id'])
+
+            # this is the wrong buyer, could i calculate the buyer on the fly
+            # listing.buyer = user
+            # listing.active = False
+            #  listing.save()
+
+        else:
+            posted_form = BidForm(request.POST)
+            if posted_form.is_valid():
+                # TODO Refactor me
+                user_making_bid = User.objects.get(pk=request.user.id)
+                listing_to_buy = AuctionListing.objects.get(pk=id)
+                bid_made_by_user = posted_form.cleaned_data["amount"]
+                # TODO: rename these please and maybe extract function
+                # check so the highest bid is not made by our selves
+                # and consider if we could have only one bid per user
+                # could use update or create
+                highest_bid = highest_bid_for(listing_to_buy)
+                print("is highest bidder same " +
+                      str(highest_bid.bidder.id != user_making_bid.id))
+                print(highest_bid.bidder.id)
+                print(user_making_bid.id)
+                if highest_bid.bidder.id != user_making_bid.id:
+                    if(bid_made_by_user > highest_bid.amount):
+                        new_highest_bid = Bid(amount=bid_made_by_user,
+                                              for_listing=listing_to_buy,
+                                              bidder=user_making_bid)
+                        new_highest_bid.save()
+                    else:
+                        error_msg = "You cannot underbid"
+                else:
+                    error_msg = "You allready hold the highest bid"
+    # Render view
+    # TODO: Hmm making annother query for same entity again, necessary?
     viewed_listing = AuctionListing.objects.get(pk=id)
-    print(viewed_listing.watchers.all())
-    print("-------------")
-    print(User.objects.get(pk=request.user.id))
-    print(User.objects.get(pk=request.user.id)
-          in viewed_listing.watchers.all())
+
     return render(request,
                   "auctions/listing.html",
                   {"listing": viewed_listing,
-                   "highest_bid": highest_bid()['amount__max'],
+                   # TODO  same thing here
+                   "highest_bid": highest_bid_for(viewed_listing),
                    "form": BidForm(),
                    "is_watched": User.objects.get(pk=request.user.id)
-                   in viewed_listing.watchers.all()})
+                   in viewed_listing.watchers.all(),
+                   "error_msg": error_msg
+                   })
 
 
 def watchlist_view(request, id):

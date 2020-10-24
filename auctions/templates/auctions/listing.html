@@ -17,6 +17,13 @@
   <li>{% if listing.category %}{{ listing.category.name }} {% endif %}</li>
 </ul>
 Current highest bid: {{highest_bid}}
+
+
+{% if error_msg != None %}
+<div class="alert alert-danger">
+  {{ error_msg }}
+</div>
+{% endif %}
 <form action="{% url 'listing' listing.id %}" method="post">
   {% csrf_token %} {{ form.as_p }}
   <input class="btn btn-primary" type="submit" value="Place bid" />
@@ -30,9 +37,16 @@ Current highest bid: {{highest_bid}}
 {% else %}
   <input class="btn btn-primary" type="submit" value="Watch">
 {% endif %}
-
   <input type="hidden" name="lst_id" value={{ listing.id }} >
   <input type="hidden" name="already_watched" value={{ is_watched }} >
 </form>
+{% if listing.owner.id ==  user.id %}
+<form action="{% url 'listing' listing.id %} " method="post">
+{% csrf_token %}
+  <input class="btn btn-primary" type="submit" value="Close auction">
+  <input type="hidden" name="closeauction" value='True' >
+  <input type="hidden" name="lst_id" value={{ listing.id }} >
+</form>
+{% endif %}
 
 {% endblock body %}

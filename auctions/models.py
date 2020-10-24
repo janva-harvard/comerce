@@ -24,6 +24,13 @@ class AuctionListing(models.Model):
     image_url = models.URLField(max_length=200, blank=True, default=None)
     active = models.BooleanField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    buyer = models.OneToOneField(User,
+                                 on_delete=models.CASCADE,
+                                 related_name="buyer",
+                                 blank=True,
+                                 default=None,
+                                 null=True)
+
     category = models.ForeignKey(Category,
                                  on_delete=models.CASCADE,
                                  blank=True,
@@ -36,22 +43,15 @@ class AuctionListing(models.Model):
 
 class Bid (models.Model):
     amount = models.DecimalField(max_digits=5, decimal_places=2)
-    for_listing = models.ForeignKey(AuctionListing, related_name="bids",
+    for_listing = models.ForeignKey(AuctionListing,
+                                    related_name="bids",
                                     on_delete=models.CASCADE)
-    # related_name="bids")
-    bidder = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="bidders")
+    bidder = models.ForeignKey(User,
+                               on_delete=models.CASCADE,
+                               related_name="bidders")
 
-# hmm would maybe be nicer with a many-to-many in user but
-# then i get circlur dependency between AuctionListing and user
-# and need a make one off them know to the other before decalaring
-# actual class
-
-
-# class WatchList (models.Model):
-#     watcher = models.ForeignKey(
-#         User, on_delete=models.CASCADE, related_name="watchlists")
-#     listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.bidder.username + ', ' + self.for_listing.title+', ' + str(self.amount)
 
 # class Comment(models.Model):
 #     """
