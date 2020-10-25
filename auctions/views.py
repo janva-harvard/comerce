@@ -37,27 +37,28 @@ def highest_bid_for(listing):
     # return Bid.objects.aggregate(Max('amount'))
 
 
+def close_auction(request):
+    """
+    docstring
+    """
+    # inactivate listing
+    listing = AuctionListing.objects.get(pk=request.POST['lst_id'])
+    listing.active = False
+
+    # temporary solution
+    highest_bid = highest_bid_for(listing)
+    listing.buyer = highest_bid.bidder
+    listing.save()
+
+
 def listing_view(request, id):
     error_msg = None
 
     if request.method == "POST":
-        print('closeauction' in request.POST)
-        print('------------------------------------------------')
         # A bit contrieved way of doing things
         # should really  check if we are the owner here as well
         if 'closeauction' in request.POST:
-            print('+++++++++++++++++closing auction+++++++++++++++')
-            print(request.POST)
-
-            # Inactivate
-            listing = AuctionListing.objects.get(pk=request.POST['lst_id'])
-            listing.active = False
-
-            # temporary solution
-            highest_bid = highest_bid_for(listing)
-            listing.buyer = highest_bid.bidder
-            listing.save()
-
+            close_auction(request)
         else:
             posted_form = BidForm(request.POST)
             if posted_form.is_valid():
