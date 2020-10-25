@@ -88,22 +88,28 @@ def make_bid(request, id):
                 else:
                     error_msg = "You allready hold the highest bid"
             else:
-                new_highest_bid = Bid(amount=bid_made_by_user,
-                                      for_listing=listing_to_buy,
-                                      bidder=user_making_bid)
-                new_highest_bid.save()
+                store_to_db(Bid(amount=bid_made_by_user,
+                                for_listing=listing_to_buy,
+                                bidder=user_making_bid))
         return error_msg
+
+
+def is_post_request(request):
+    return request.method == "POST"
+
+
+def is_close_request(request):
+    return 'closeauction' in request.POST
 
 
 def listing_view(request, id):
     error_msg = None
-    if request.method == "POST":
+    if is_post_request(request):
         # A bit contrieved way of doing things
-        # should really  check if we are the owner here as well
-        if 'closeauction' in request.POST:
+        if is_close_request(request):
             close_auction(request)
         else:
-            # FIXME side effect
+            # Fixme side effect
             error_msg = make_bid(request, id)
     # TODO: Hmm making annother query for same entity again, necessary?
     # TODO  not balanced
