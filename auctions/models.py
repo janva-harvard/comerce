@@ -40,6 +40,9 @@ class AuctionListing(models.Model):
                                       blank=True,
                                       related_name="watched_listings")
 
+    def __str__(self):
+        return self.title
+
 
 class Bid (models.Model):
     amount = models.DecimalField(max_digits=5, decimal_places=2)

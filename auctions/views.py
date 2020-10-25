@@ -10,10 +10,14 @@ from .forms import NewListingsForm, BidForm
 
 
 def index(request):
+    # A temp solution
     active_listings = AuctionListing.objects.filter(active=True)
+    # only if user is logged in
+    won_listing = AuctionListing.objects.filter(buyer=request.user.id)
     return render(request,
                   "auctions/index.html", {
                       "listings": active_listings,
+                      "won_auctions": won_listing
                   })
 
 
@@ -26,8 +30,11 @@ def category_listing_view(request, id):
 
 def highest_bid_for(listing):
     bids = listing.bids
-    # make sure such on object exist maybe
-    return bids.all().order_by('-amount')[0]
+    if not bids.all():
+        # hmm not nice but let's do it like this for now
+        return None
+    else:
+        return bids.all().order_by('-amount')[0]
     # could I exist or stor  pattern
     # return Bid.objects.aggregate(Max('amount'))
 
@@ -39,21 +46,19 @@ def listing_view(request, id):
         print('closeauction' in request.POST)
         print('------------------------------------------------')
         # A bit contrieved way of doing things
+        # should really  check if we are the owner here as well
         if 'closeauction' in request.POST:
-            # request.POST['closeauction'] == 'True':
-            # close auction by inactivating the post
-            # Continue here need to find the user with
-            # highest bid
             print('+++++++++++++++++closing auction+++++++++++++++')
-            pass
-            # user = User.objects.get(pk=request.user.id)
-            # print(request.POST['lst_id'])
-            # listing = AuctionListing.objects.get(pk=request.POST['lst_id'])
+            print(request.POST)
 
-            # this is the wrong buyer, could i calculate the buyer on the fly
-            # listing.buyer = user
-            # listing.active = False
-            #  listing.save()
+            # Inactivate
+            listing = AuctionListing.objects.get(pk=request.POST['lst_id'])
+            listing.active = False
+
+            # temporary solution
+            highest_bid = highest_bid_for(listing)
+            listing.buyer = highest_bid.bidder
+            listing.save()
 
         else:
             posted_form = BidForm(request.POST)
@@ -62,38 +67,45 @@ def listing_view(request, id):
                 user_making_bid = User.objects.get(pk=request.user.id)
                 listing_to_buy = AuctionListing.objects.get(pk=id)
                 bid_made_by_user = posted_form.cleaned_data["amount"]
-                # TODO: rename these please and maybe extract function
-                # check so the highest bid is not made by our selves
-                # and consider if we could have only one bid per user
-                # could use update or create
-                highest_bid = highest_bid_for(listing_to_buy)
-                print("is highest bidder same " +
-                      str(highest_bid.bidder.id != user_making_bid.id))
-                print(highest_bid.bidder.id)
-                print(user_making_bid.id)
-                if highest_bid.bidder.id != user_making_bid.id:
-                    if(bid_made_by_user > highest_bid.amount):
+                # so maybe only need to remove button in template
+                if bid_made_by_user == listing_to_buy.owner:
+                    error_msg = "Can't bid on your own listings"
+                else:
+                    # TODO: rename these please and maybe extract function
+                    # check so the highest bid is not made by our selves
+                    # and consider if we could have only one bid per user
+                    # could use update or create
+                    highest_bid = highest_bid_for(listing_to_buy)
+                    if (highest_bid is not None):
+                        if highest_bid.bidder.id != user_making_bid.id:
+                            if(bid_made_by_user > highest_bid.amount):
+                                new_highest_bid = Bid(amount=bid_made_by_user,
+                                                      for_listing=listing_to_buy,
+                                                      bidder=user_making_bid)
+                                new_highest_bid.save()
+                            else:
+                                error_msg = "You cannot underbid"
+                        else:
+                            error_msg = "You allready hold the highest bid"
+                    else:
                         new_highest_bid = Bid(amount=bid_made_by_user,
                                               for_listing=listing_to_buy,
                                               bidder=user_making_bid)
                         new_highest_bid.save()
-                    else:
-                        error_msg = "You cannot underbid"
-                else:
-                    error_msg = "You allready hold the highest bid"
     # Render view
     # TODO: Hmm making annother query for same entity again, necessary?
     viewed_listing = AuctionListing.objects.get(pk=id)
-
     return render(request,
                   "auctions/listing.html",
                   {"listing": viewed_listing,
                    # TODO  same thing here
                    "highest_bid": highest_bid_for(viewed_listing),
                    "form": BidForm(),
-                   "is_watched": User.objects.get(pk=request.user.id)
+                   "is_watched": request.user.id and
+                   User.objects.get(pk=request.user.id)
                    in viewed_listing.watchers.all(),
-                   "error_msg": error_msg
+                   "error_msg": error_msg,
+
                    })
 
 

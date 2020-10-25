@@ -1,4 +1,26 @@
 {% extends "auctions/layout.html" %} {% block body %}
+ {% if user.is_authenticated %}
+<h1>Listings you won</h1>
+{% for won in won_auctions %}
+<div>
+  <ul>
+    <li>{{ won.title }}</li>
+    <li>{{ won.description }}</li>
+    <li>{{ won.starting_bid }}</li>
+    <li>
+      {% if won.image_url %}
+      <img
+        class="prod_image_small"
+        src="{{ won.image_url }}"
+        alt="product image titled {{ won.title }}"
+      />
+      {% endif %}
+    </li>
+    <li>{% if won.active %}Active {% endif %}</li>
+    <li>{% if won.category %}{{ won.category.name }} {% endif %}</li>
+  </ul>
+</div>
+{% endfor %} {% endif %}
 <h2>Active Listings</h2>
 {% for listing in listings%}
 <div>

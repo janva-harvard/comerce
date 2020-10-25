@@ -4,6 +4,7 @@
   <li>{{ listing.title }}</li>
   <li>{{ listing.description }}</li>
   <li>{{ listing.starting_bid }}</li>
+  <li>{{ listing.owner }}</li>
   <li>
     {% if listing.image_url %}
     <img
@@ -24,6 +25,8 @@ Current highest bid: {{highest_bid}}
   {{ error_msg }}
 </div>
 {% endif %}
+
+{% if user.is_authenticated and listing.owner.id !=  user.id%}
 <form action="{% url 'listing' listing.id %}" method="post">
   {% csrf_token %} {{ form.as_p }}
   <input class="btn btn-primary" type="submit" value="Place bid" />
@@ -40,6 +43,7 @@ Current highest bid: {{highest_bid}}
   <input type="hidden" name="lst_id" value={{ listing.id }} >
   <input type="hidden" name="already_watched" value={{ is_watched }} >
 </form>
+{% endif %}
 {% if listing.owner.id ==  user.id %}
 <form action="{% url 'listing' listing.id %} " method="post">
 {% csrf_token %}
@@ -48,5 +52,4 @@ Current highest bid: {{highest_bid}}
   <input type="hidden" name="lst_id" value={{ listing.id }} >
 </form>
 {% endif %}
-
 {% endblock body %}
