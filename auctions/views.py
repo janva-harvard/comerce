@@ -10,14 +10,12 @@ from .forms import NewListingsForm, BidForm
 
 
 def index(request):
-    # A temp solution
-    active_listings = AuctionListing.objects.filter(active=True)
-    # only if user is logged in
-    won_listing = AuctionListing.objects.filter(buyer=request.user.id)
     return render(request,
-                  "auctions/index.html", {
-                      "listings": active_listings,
-                      "won_auctions": won_listing
+                  "auctions/index.html",
+                  {
+                      "listings": AuctionListing.objects.filter(active=True),
+                      "won_auctions":
+                      AuctionListing.objects.filter(buyer=request.user.id)
                   })
 
 

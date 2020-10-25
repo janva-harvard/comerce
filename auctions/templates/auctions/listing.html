@@ -14,7 +14,7 @@
     />
     {% endif %}
   </li>
-  <li>{% if listing.active %}Active {% endif %}</li>
+  <li>{% if listing.active %}Active {% else %}This listing is inactive{% endif %}</li>
   <li>{% if listing.category %}{{ listing.category.name }} {% endif %}</li>
 </ul>
 Current highest bid: {{highest_bid}}
@@ -26,7 +26,7 @@ Current highest bid: {{highest_bid}}
 </div>
 {% endif %}
 
-{% if user.is_authenticated and listing.owner.id !=  user.id%}
+{% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
 <form action="{% url 'listing' listing.id %}" method="post">
   {% csrf_token %} {{ form.as_p }}
   <input class="btn btn-primary" type="submit" value="Place bid" />
