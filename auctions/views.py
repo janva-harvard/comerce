@@ -25,6 +25,8 @@ def category_listing_view(request, id):
                   "auctions/category_listing.html",
                   {"listings": category.listings.all()})
 
+###################################################################################
+
 
 def highest_bid_for(listing):
     bids = listing.bids
@@ -59,6 +61,7 @@ def close_auction(listing):
 
 
 def make_bid(request, id):
+    # hmm maybe wrong level of abstraction
     error_msg = None
     posted_form = BidForm(request.POST)
 
@@ -71,18 +74,20 @@ def make_bid(request, id):
         # and consider if we could have only one bid per user
         # could use update or create
         highest_bid = highest_bid_for(listing_to_buy)
+        # Has anyone yet made a bid on this item
+        # Hmm do we need this case at all
+        # if (highest_bid is not None):
 
-        if (highest_bid is not None):
-            if highest_bid.bidder.id != user_making_bid.id:
-                error_msg = "You allready hold the highest bid"
-                return error_msg
+        # Do we already hold the highest bid
+        if highest_bid.bidder.id == user_making_bid.id:
+            error_msg = "You allready hold the highest bid"
+            return error_msg
+        # is_highest_bid?
+        if(bid_made_by_user < highest_bid.amount):
+            error_msg = "You cannot underbid"
+            return error_msg
 
-            if(bid_made_by_user > highest_bid.amount):
-                error_msg = "You cannot underbid"
-                return error_msg
-
-        # TODO consider if i should have/use store_to_db or do
-        # it just like this
+        # Store highest bid to db
         new_highest_bid = Bid(amount=bid_made_by_user,
                               for_listing=listing_to_buy,
                               bidder=user_making_bid)
@@ -109,8 +114,8 @@ def listing_view(request, id):
             close_auction(listing=AuctionListing.objects.get(
                 pk=request.POST['lst_id']))
         else:
-            # Fixme side effect
             error_msg = make_bid(request, id)
+
     # TODO: Hmm making annother query for same entity again, necessary?
     # TODO  not balanced
     viewed_listing = AuctionListing.objects.get(pk=id)
@@ -182,7 +187,6 @@ def new_listing_view(request):
                 # Hmm might need to check if this exists or not
                 # take happy path for now
                 image_url=request.POST['image_url'],
-                # active=True if request.POST['active'] == "on" else False,
                 active='active' in request.POST,
                 owner=request.user,
                 category=Category.objects.get(id=request.POST['category']),
@@ -198,6 +202,8 @@ def new_listing_view(request):
     else:
         return render(request,
                       "auctions/login.html")
+
+############################# implemented  before #############################
 
 
 def login_view(request):
