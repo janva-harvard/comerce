@@ -25,8 +25,6 @@ def category_listing_view(request, id):
                   "auctions/category_listing.html",
                   {"listings": category.listings.all()})
 
-###################################################################################
-
 
 def highest_bid_for(listing):
     # TODO could I possably use get_or_create here
@@ -39,12 +37,11 @@ def highest_bid_for(listing):
         return bids.all().order_by('-amount')[0]
 
 
-# hmm arguments passed as refernce in python?
 def inactivate_listing(listing):
     listing.active = False
 
 
-def anounce_winner(listing):
+def announce_winner(listing):
     highest_bid = highest_bid_for(listing)
     listing.buyer = highest_bid.bidder
 
@@ -56,45 +53,37 @@ def store_to_db(model_obj):
 def close_auction(listing):
     # hmm could inline variable but would mean extra requests to db
     inactivate_listing(listing)
-    anounce_winner(listing)
+    announce_winner(listing)
     store_to_db(listing)
 
 
 def make_bid(request, id):
     # hmm maybe wrong level of abstraction
     error_msg = None
-    posted_form = BidForm(request.POST)
 
-    if posted_form.is_valid():
+    if BidForm(request.POST).is_valid():
         user_making_bid = User.objects.get(pk=request.user.id)
         listing_to_buy = AuctionListing.objects.get(pk=id)
-        bid_made_by_user = posted_form.cleaned_data["amount"]
-        # Null object instead of return null?
-        # TODO continue here find a way around empty
-
+        bid_made_by_user = BidForm(request.POST).cleaned_data["amount"]
         highest_bid = highest_bid_for(listing_to_buy)
-        # Has anyone yet made a bid on this item
-        # Hmm do we need this case at all
-        # TODO continue here find a way around empty highest_bid
-        # if (highest_bid is not None):
-        # Store highest bid to db
 
         # Do we already hold the highest bid
         if highest_bid.bidder.id == user_making_bid.id:
             error_msg = "You allready hold the highest bid"
             return error_msg
+
         # is_highest_bid?
         if(bid_made_by_user < highest_bid.amount):
             error_msg = "You cannot underbid"
             return error_msg
 
-        new_highest_bid = Bid(amount=bid_made_by_user,
-                              for_listing=listing_to_buy,
-                              bidder=user_making_bid)
-
-        new_highest_bid.save()
+        # Store new highest bid to DB
+        Bid(amount=bid_made_by_user,
+            for_listing=listing_to_buy,
+            bidder=user_making_bid).save()
 
         # TODO need a better solution don't want to pass around error msg
+        # catch throw
         return error_msg
 
 
@@ -153,7 +142,7 @@ def watchlist_view(request, id):
             watched_listing.save()
             # id_of_lst_to_watch = request.POST["lst_id"]
             # listing_to_watch = AuctionListing.objects.get(pk=id_of_lst_to_watch)
-            # # Hmm can i found out if when this commes back  so i can warn
+            # # Hmm can i find out if when this commes back  so i can warn
             # obj = WatchList.objects.get_or_create(
             #     watcher=usr, listing=listing_to_watch
             # )
