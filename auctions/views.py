@@ -29,14 +29,14 @@ def category_listing_view(request, id):
 
 
 def highest_bid_for(listing):
+    # TODO could I possably use get_or_create here
     bids = listing.bids
     if not bids.all():
-        # hmm not nice but let's do it like this for now
-        return None
+        return Bid(amount=listing.starting_bid,
+                   for_listing=listing,
+                   bidder=listing.owner)
     else:
         return bids.all().order_by('-amount')[0]
-    # could I exist or stor  pattern
-    # return Bid.objects.aggregate(Max('amount'))
 
 
 # hmm arguments passed as refernce in python?
@@ -69,14 +69,15 @@ def make_bid(request, id):
         user_making_bid = User.objects.get(pk=request.user.id)
         listing_to_buy = AuctionListing.objects.get(pk=id)
         bid_made_by_user = posted_form.cleaned_data["amount"]
-        # TODO: rename these please and maybe extract function
-        # check so the highest bid is not made by our selves
-        # and consider if we could have only one bid per user
-        # could use update or create
+        # Null object instead of return null?
+        # TODO continue here find a way around empty
+
         highest_bid = highest_bid_for(listing_to_buy)
         # Has anyone yet made a bid on this item
         # Hmm do we need this case at all
+        # TODO continue here find a way around empty highest_bid
         # if (highest_bid is not None):
+        # Store highest bid to db
 
         # Do we already hold the highest bid
         if highest_bid.bidder.id == user_making_bid.id:
@@ -87,10 +88,10 @@ def make_bid(request, id):
             error_msg = "You cannot underbid"
             return error_msg
 
-        # Store highest bid to db
         new_highest_bid = Bid(amount=bid_made_by_user,
                               for_listing=listing_to_buy,
                               bidder=user_making_bid)
+
         new_highest_bid.save()
 
         # TODO need a better solution don't want to pass around error msg
