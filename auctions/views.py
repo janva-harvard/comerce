@@ -57,23 +57,29 @@ def close_auction(listing):
     store_to_db(listing)
 
 
+def biding_against_myself(user_bidding, highest_bid):
+    return user_bidding.id == highest_bid.bidder.id
+
+
 def make_bid(request, id):
     # hmm maybe wrong level of abstraction
     error_msg = None
-
-    if BidForm(request.POST).is_valid():
+    posted_form = BidForm(request.POST)
+    if posted_form.is_valid():
+        # if BidForm(request.POST).is_valid():
         user_making_bid = User.objects.get(pk=request.user.id)
         listing_to_buy = AuctionListing.objects.get(pk=id)
-        bid_made_by_user = BidForm(request.POST).cleaned_data["amount"]
+        bid_made_by_user = posted_form.cleaned_data["amount"]
         highest_bid = highest_bid_for(listing_to_buy)
 
         # Do we already hold the highest bid
-        if highest_bid.bidder.id == user_making_bid.id:
+        # if highest_bid.bidder.id == user_making_bid.id:
+        if biding_against_myself(user_making_bid, highest_bid):
             error_msg = "You allready hold the highest bid"
             return error_msg
 
         # is_highest_bid?
-        if(bid_made_by_user < highest_bid.amount):
+        if bid_made_by_user < highest_bid.amount:
             error_msg = "You cannot underbid"
             return error_msg
 
@@ -140,14 +146,6 @@ def watchlist_view(request, id):
             print(watched_listing)
             print(watched_listing.watchers.all())
             watched_listing.save()
-            # id_of_lst_to_watch = request.POST["lst_id"]
-            # listing_to_watch = AuctionListing.objects.get(pk=id_of_lst_to_watch)
-            # # Hmm can i find out if when this commes back  so i can warn
-            # obj = WatchList.objects.get_or_create(
-            #     watcher=usr, listing=listing_to_watch
-            # )
-            # if (obj[1]):
-            #     print("created new obj")
 
     return render(request, "auctions/watchlist.html", {
         "listings": watchlsts
