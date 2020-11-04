@@ -23,13 +23,10 @@
   src: url('/fonts/Montserrat/Montserrat-MediumItalic.ttf');
 }
 body {
-  padding: 10px;
+  padding-top: 140px;
   font-family: montMedium;
+  color: #092b36;
 }
-
-/* .prod_image_small {
-  width: 100px;
-} */
 
 .logo {
   text-align: center;
@@ -39,6 +36,9 @@ body {
 }
 .nav-link {
   color: #ffffff !important;
+}
+.constrasting-color {
+  color: #b95c5c;
 }
 .theme-color-dark-1 {
   color: #092b36;
@@ -83,13 +83,20 @@ than.... */
   align-self: flex-center;
 }
 .price {
-  color: red;
+  color: 092b36;
+  stroke: red;
 }
 
-.price:before {
+.price::before {
   display: block;
+  position: relative;
+  top: -8px;
   content: url('images/euro.svg');
   background-size: 22px 22px;
   height: 22px;
   width: 22px;
+  stroke: blue;
+  fill: red;
+  color: red;
+  opacity: 1;
 }

@@ -1,4 +1,5 @@
 {% extends "auctions/layout.html" %} {% block body %}
+<div class="main">
  {% if user.is_authenticated %}
 <h1 class="theme-color-dark-1">Listings you won</h1>
 {% for won in won_auctions %}
@@ -56,5 +57,5 @@
 </div>
 {% endfor %}
 </div>
-
+</div>
  {% endblock %}
