@@ -1,27 +1,14 @@
 {% extends "auctions/layout.html" %} {% block body %}
 <div class="main">
  {% if user.is_authenticated %}
-<h1 class="theme-color-dark-1">Listings you won</h1>
-{% for won in won_auctions %}
-<div
-  <ul>
-    <li>{{ won.title }}</li>
-    <li>{{ won.description }}</li>
-    <li>{{ won.starting_bid }}</li>
-    <li>
-      {% if won.image_url %}
-      <img
-        class="prod_image_small"
-        src="{{ won.image_url }}"
-        alt="product image titled {{ won.title }}"
-      />
-      {% endif %}
-    </li>
-    <li>{% if won.active %}Active {% endif %}</li>
-    <li>{% if won.category %}{{ won.category.name }} {% endif %}</li>
-  </ul>
-</div>
-{% endfor %} {% endif %}
+ <h1 class="theme-color-dark-1">Listings you won</h1>
+
+ {% for listing in won_auctions %}
+{% include "auctions/card-component.html" %}
+
+{% endfor %}
+
+ {% endif %}
 
 <h2>Active Listings</h2>
 <div class="card-columns">
