@@ -100,3 +100,38 @@ than.... */
   color: red;
   opacity: 1;
 }
+/* .img-overlay-wrap {
+  postion: relative;
+  display: inline-block;
+  transition: transform 150ms ease-in-out;
+} */
+
+/* .img-overlay-wrap img {
+  display: block;
+  max-width: 100%;
+  height auto;
+} */
+/* .img-overlay-wrap svg{
+  display: inline;
+  position: absolute;
+  top: 0;
+  left: 0;
+} */
+
+/* .img-overlay-wrap:hover {
+  transform: rotate(15deg);
+} */
+
+.winner {
+  position: absolute;
+  /* top:-15px; 
+ left: 200px; */
+  top: -15px;
+  right: -45px;
+  width: 200px;
+  padding: 0px;
+  z-index: 10;
+}
+.card-columns {
+  position: relative;
+}

@@ -2,10 +2,8 @@
 <div class="main">
  {% if user.is_authenticated %}
  <h1 class="theme-color-dark-1">Listings you won</h1>
-
  {% for listing in won_auctions %}
 {% include "auctions/card-component.html" %}
-
 {% endfor %}
 
  {% endif %}
@@ -13,8 +11,7 @@
 <h2>Active Listings</h2>
 <div class="card-columns">
 {% for listing in listings%}
-{% include "auctions/card-component.html" %}
-
+  {% include "auctions/card-component.html" %}
 {% endfor %}
 </div>
 </div>

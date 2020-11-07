@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="a490d581-c356-41e2-b0f0-0de4275777d8" data-name="Layer 1" width="1144" height="652.52" viewBox="0 0 1144 652.52" version="1.1" sodipodi:docname="price.svg" inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+
+   <metadata id="metadata219">
+      <rdf:RDF>
+         <cc:Work rdf:about="">
+            <dc:format>image/svg+xml</dc:format>
+            <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+            <dc:title>winners</dc:title>
+         </cc:Work>
+      </rdf:RDF>
+   </metadata>
+   <sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="2488" inkscape:window-height="1376" id="namedview217" showgrid="false" inkscape:zoom="0.85792326" inkscape:cx="727.04654" inkscape:cy="111.29905" inkscape:window-x="72" inkscape:window-y="27" inkscape:window-maximized="1" inkscape:current-layer="a490d581-c356-41e2-b0f0-0de4275777d8" />
+   <defs id="defs10">
+      <linearGradient id="e151d6ee-b0bf-4b5d-8ce9-000e8108dac8" x1="836.51" y1="628.67" x2="836.51" y2="226.37" gradientUnits="userSpaceOnUse">
+         <stop offset="0" stop-color="gray" stop-opacity="0.25" id="stop2" />
+         <stop offset="0.54" stop-color="gray" stop-opacity="0.12" id="stop4" />
+         <stop offset="1" stop-color="gray" stop-opacity="0.1" id="stop6" />
+      </linearGradient>
+      <linearGradient id="e2a6fc7a-3d7b-4d78-8350-c6ea621e07cc" x1="178.62" y1="535.35" x2="400.84" y2="535.35" xlink:href="#e151d6ee-b0bf-4b5d-8ce9-000e8108dac8" />
+   </defs>
+   <title id="title12">winner</title>
+   <path d="M777,372.81l-.68,9.13c-.1,1.24-2.47,30.76-19.95,65.26-15,29.59-44.19,68.13-99.3,89.79q-6.45,2.55-13.39,4.76l-5.16-16.2a189.43,189.43,0,0,0,37.22-16.28c28.09-16.22,49.93-39.37,65.16-69.16A185.77,185.77,0,0,0,758,389.81h-62.7v-17Z" transform="translate(-28 -123.74)" fill="#B95C5C" id="path80" />
+   <path d="M650.32,537c55.1-21.66,84.3-60.19,99.29-89.78,17.48-34.5,19.86-64,19.95-65.26l.68-9.13h7l-.68,9.13c-.09,1.24-2.47,30.76-19.95,65.26-15,29.59-44.19,68.12-99.29,89.78q-6.45,2.55-13.4,4.77l-.68-2.13Q646.86,538.35,650.32,537Z" transform="translate(-28 -123.74)" fill="#fff" opacity="0.4" id="path82" />
+   <path d="M540,525.55l-5.16,16.2q-6.95-2.22-13.4-4.77c-55.1-21.66-84.3-60.19-99.29-89.78-17.48-34.5-19.86-64-19.95-65.26l-.68-9.13h81.66v17H420.47a185.88,185.88,0,0,0,17.15,50.3c15.23,29.79,37.06,52.94,65.15,69.15A189,189,0,0,0,540,525.55Z" transform="translate(-28 -123.74)" fill="#B95C5C" id="path84" />
+   <path d="M528.18,537c-55.1-21.66-84.3-60.19-99.29-89.78-17.48-34.5-19.86-64-19.95-65.26l-.68-9.13h-7l.68,9.13c.09,1.24,2.47,30.76,19.95,65.26,15,29.59,44.19,68.12,99.29,89.78q6.45,2.55,13.4,4.77l.68-2.13Q531.65,538.35,528.18,537Z" transform="translate(-28 -123.74)" fill="#fff" opacity="0.4" id="path86" />
+   <path d="M683.59,682.15v91.67H494.92V682.15l6-8c61.14-21.7,73.53-78.29,76-100.68a92.05,92.05,0,0,0,.63-9.32h23.33a92.05,92.05,0,0,0,.63,9.32c2.51,22.39,14.9,79,76,100.68Z" transform="translate(-28 -123.74)" fill="#B95C5C" id="path88" />
+   <rect x="466.92" y="558.41" width="188.67" height="11.5" opacity="0.1" id="rect90" />
+   <path d="M510.92,674.15c61.14-21.7,73.53-78.29,76-100.68a92.05,92.05,0,0,0,.63-9.32h-10a92.05,92.05,0,0,1-.63,9.32c-2.51,22.39-14.9,79-76,100.68l-6,8v91.67h10V682.15Z" transform="translate(-28 -123.74)" fill="#fff" opacity="0.1" id="path92" />
+   <path d="M466.26,372.81h16.92v17H467.76Q466.85,381.41,466.26,372.81Z" transform="translate(-28 -123.74)" opacity="0.1" id="path94" />
+   <path d="M540,525.55l-5.16,16.2q-6.95-2.22-13.4-4.77a179.15,179.15,0,0,1-18.67-27.72A189,189,0,0,0,540,525.55Z" transform="translate(-28 -123.74)" opacity="0.1" id="path96" />
+   <path d="M638.51,525.55a189.43,189.43,0,0,0,37.22-16.28A179.86,179.86,0,0,1,657.06,537q-6.45,2.55-13.39,4.76Z" transform="translate(-28 -123.74)" opacity="0.1" id="path98" />
+   <path d="M712.24,372.81q-.59,8.6-1.5,17H695.33v-17Z" transform="translate(-28 -123.74)" opacity="0.1" id="path100" />
+   <path d="M601.55,573.47a64.64,64.64,0,0,1-24.59,0,92.05,92.05,0,0,0,.63-9.32h23.33A92.05,92.05,0,0,0,601.55,573.47Z" transform="translate(-28 -123.74)" opacity="0.1" id="path102" />
+   <path d="M468.26,344.65c.43,126.06,54.43,228,121,228s120.56-101.94,121-228Z" transform="translate(-28 -123.74)" fill="#B95C5C" id="path104" />
+   <path d="M489.76,344.65h-21.5c.43,126.06,54.43,228,121,228a65.35,65.35,0,0,0,10.75-.91C538.47,561.46,490.17,463.85,489.76,344.65Z" transform="translate(-28 -123.74)" fill="#fff" opacity="0.1" id="path106" />
+   <rect x="497.09" y="593.5" width="128.33" height="33" fill="#092B36" opacity="0.4" id="rect108" />
+   <polygon points="503.09 598 625.42 598 625.42 593.5 497.09 593.5 497.09 626.5 503.09 626.5 503.09 598" fill="#fff" opacity="0.1" id="polygon110" />
+</svg>

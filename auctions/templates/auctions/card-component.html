@@ -1,31 +1,50 @@
-
+{% load static %}
 <div class="card">
-{% if listing.image_url %}
-      <img 
+  {% if listing.image_url %}
+      {% comment %} <img 
         class="card-img-top"
         src="{{ listing.image_url }}"
         alt="product image titled {{ listing.title }}"
-      />
+      /> {% endcomment %}
+      
+      <div class="img-overlay-wrap">
+        <img 
+          class="card-img-top"
+          src="{{ listing.image_url }}"
+          alt="product image titled {{ listing.title }}"
+        />
+      {% if True %}  
+        <object type= "image/svg+xml"
+           data= "{% static 'auctions/images/price.svg' %}"
+          class ="winner">
+          winner-svg
+        </object>
       {% endif %}
 
-<div class = "card-body">
-  <h4 class "card-title">  {{ listing.title }}</h4>
-    <p class="card-text">{{ listing.description }}</p>
-    <p>
-    <span>    
-{% if listing.category %}Category: {{ listing.category.name }} {% endif %}
-    </span>
-</p>
-  <div class="card-bottom-container">
-  <div class="card-button-item">
-  <a class="btn btn-outline-primary" href=" {% url 'listing' listing.id %}">Detailes</a>
+      </div>
+
+  {% endif %}
+
+  <div class = "card-body">
+    <h4 class "card-title">  {{ listing.title }}</h4>
+      <p class="card-text">{{ listing.description }}</p>
+      <p>
+        <span>    
+          {% if listing.category %}
+            Category: {{ listing.category.name }} 
+          {% endif %}
+        </span>
+      </p>
+    <div class="card-bottom-container">
+      <div class="card-button-item">
+        <a class="btn btn-outline-primary" href=" {% url 'listing' listing.id %}">Detailes</a>
+      </div>
+      <div class="card-info">
+        <span class="price">
+         {{ listing.starting_bid }}
+        </span>
+      </div>
+    </div>
+  </div>
   </div>
 
-  <div class="card-info">
-<span class="price">
-    {{ listing.starting_bid }}
-    </span>
-  </div>
-  </div>
-  </div>
-  </div>
