@@ -27,7 +27,15 @@ body {
   font-family: montMedium;
   color: #092b36;
 }
-
+.main {
+  margin-top: 40px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.listing-header {
+  text-align: center;
+  padding-bottom: 20px;
+}
 .logo {
   text-align: center;
   margin-left: auto;
@@ -133,8 +141,6 @@ than.... */
   z-index: 10;
   animation: rotate 2s ease alternate infinite;
 }
-/* .winner:hover {
-} */
 /* .trophy-foot {
   animation: kaboom 3s ease alternate infinite;
 } */
