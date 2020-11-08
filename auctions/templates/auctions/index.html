@@ -1,10 +1,13 @@
 {% extends "auctions/layout.html" %} {% block body %}
+
 <div class="main">
  {% if user.is_authenticated %}
  <h1 class="theme-color-dark-1">Listings you won</h1>
+<div class="card-columns">
  {% for listing in won_auctions %}
-{% include "auctions/card-component.html" %}
-{% endfor %}
+ {% include "auctions/card-component.html" %}
+ {% endfor %}
+ </div>
 
  {% endif %}
 

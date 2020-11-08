@@ -131,7 +131,77 @@ than.... */
   width: 200px;
   padding: 0px;
   z-index: 10;
+  animation: rotate 2s ease alternate infinite;
 }
+/* .winner:hover {
+} */
+/* .trophy-foot {
+  animation: kaboom 3s ease alternate infinite;
+} */
+/* .trophy-body {
+  transform: translateY(150px);
+  animation: popup 10s 6.5s ease infinite;
+
+} */
+.trophy-body-shadow {
+  animation: bling 2s ease alternate infinite;
+}
+.trophy-plate {
+  /* animation: kaboom 3s ease alternate infinite; */
+  fill: linear-gradient(to bottom right, red, yellow);
+
+  animation: bling 1s ease-alternate infinite;
+}
+.trophy-plate-border {
+  animation: bling 2s ease alternate infinite;
+}
+/* .trophy-right-handle {
+  animation: kaboom 3s ease alternate infinite;
+}
+.trophy-left-handle {
+  animation: kaboom 3s ease alternate infinite;
+} */
+
 .card-columns {
   position: relative;
+}
+/* Animations */
+@keyframes kaboom {
+  90% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+@keyframes popup {
+  0% {
+    transform: translateY(150px);
+  }
+  34% {
+    transform: translateY(20px);
+  }
+  37% {
+    transform: translateY(150px);
+  }
+  100% {
+    transform: translateY(150px);
+  }
+}
+@keyframes bling {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(40deg);
+  }
 }
