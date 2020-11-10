@@ -54,24 +54,19 @@ body {
 .card {
   width: 400px;
 }
+/* ------------------------------------ Button --------------------------- */
 .btn,
 .btn-outline-primary {
   color: #b95c5c;
+  border-color: #f95c5c;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active {
+  color: #fff;
+  background-color: #c56868;
   border-color: #b95c5c;
 }
-
-.btn:hover,
 .btn-outline-primary:hover {
-  border-color: #9e3434;
-  background-color: #b95c5c;
-}
-/* TODO create my own buttons instead more work to override bootstrap buttons
-than.... */
-
-.btn:active,
-.btn:focus,
-.btn-outline-primary:active,
-.btn-outline-primary:focus {
   border: 1px solid #7e4040;
   border-color: #9e3434;
   color: white;
@@ -79,6 +74,8 @@ than.... */
   text-decoration: none;
   outline: none;
 }
+
+/* ------------------------------------------------------------------------- */
 .card-bottom-container {
   display: flex;
   justify-content: space-between;
