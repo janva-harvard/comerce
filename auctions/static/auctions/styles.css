@@ -89,7 +89,8 @@ body {
 }
 .price {
   color: 092b36;
-  stroke: red;
+  /* stroke: red;
+  opacity: 0.5; */
 }
 
 .price::before {
@@ -105,7 +106,20 @@ body {
   color: red;
   opacity: 1;
 }
+.img-overlay {
+  /* background: black;
+  width: 100%;
+  height: 100%; */
+  background-color: rgb(117, 41, 41, 1);
+  opacity: 0.6;
 
+  overflow: hidden;
+}
+
+/* .card-image-top {
+  object-fit: cover;
+  opacity: 0.4;
+} */
 .winner {
   position: absolute;
   top: -15px;
@@ -120,9 +134,17 @@ body {
   animation: bling 2s ease alternate infinite;
 }
 .trophy-plate {
-  fill: linear-gradient(to bottom right, red, yellow);
+  /* fill: linear-gradient(to bottom right, red, yellow); */
   animation: bling 1s ease-alternate infinite;
 }
+/* svg {
+  fill: currentColor;
+} */
+.trophy-body {
+  fill: #b95c5c;
+  /* fill: linear-gradient(to bottom right, red, yellow); */
+}
+
 .trophy-plate-border {
   animation: bling 2s ease alternate infinite;
 }

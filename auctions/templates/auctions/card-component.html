@@ -1,14 +1,12 @@
 {% load static %}
 <div class="card">
   {% if listing.image_url %}
-      <div class="img-overlay-wrap">
         <img 
-          class="card-img-top"
+          class="card-img-top {% if listing in won_auctions %}img-overlay {% endif %}"
           src="{{ listing.image_url }}"
           alt="product image titled {{ listing.title }}"
         />
-
-
+      {% comment %} </div> {% endcomment %}
         {% if listing in won_auctions %}
           <?xml version="1.0" encoding="UTF-8"?>
           <svg data-name="Layer 1" version="1.1" viewBox="0 0 1144 652.52"
@@ -40,13 +38,13 @@
                 <rect x="466.92" y="558.41" width="188.67" height="11.5" opacity=".1" />
                 <path transform="translate(-28 -123.74)" d="M510.92,674.15c61.14-21.7,73.53-78.29,76-100.68a92.05,92.05,0,0,0,.63-9.32h-10a92.05,92.05,0,0,1-.63,9.32c-2.51,22.39-14.9,79-76,100.68l-6,8v91.67h10V682.15Z" fill="#fff" opacity=".1" />
             </g>
-            <g class="trophy-body">
+            <g >
                 <path transform="translate(-28 -123.74)" d="m466.26 372.81h16.92v17h-15.42q-0.91-8.4-1.5-17z" opacity=".1" />
                 <path transform="translate(-28 -123.74)" d="m540 525.55-5.16 16.2q-6.95-2.22-13.4-4.77a179.15 179.15 0 0 1-18.67-27.72 189 189 0 0 0 37.23 16.29z" opacity=".1" />
                 <path transform="translate(-28 -123.74)" d="M638.51,525.55a189.43,189.43,0,0,0,37.22-16.28A179.86,179.86,0,0,1,657.06,537q-6.45,2.55-13.39,4.76Z" opacity=".1" />
                 <path transform="translate(-28 -123.74)" d="M712.24,372.81q-.59,8.6-1.5,17H695.33v-17Z" opacity=".1" />
                 <path transform="translate(-28 -123.74)" d="m601.55 573.47a64.64 64.64 0 0 1-24.59 0 92.05 92.05 0 0 0 0.63-9.32h23.33a92.05 92.05 0 0 0 0.63 9.32z" opacity=".1" />
-                <path transform="translate(-28 -123.74)" d="M468.26,344.65c.43,126.06,54.43,228,121,228s120.56-101.94,121-228Z" fill="#B95C5C" />
+                <path class="trophy-body" transform="translate(-28 -123.74)" d="M468.26,344.65c.43,126.06,54.43,228,121,228s120.56-101.94,121-228Z"  />
             </g>
             <g class="trophy-body-shadow">
                 <path transform="translate(-28 -123.74)" d="M489.76,344.65h-21.5c.43,126.06,54.43,228,121,228a65.35,65.35,0,0,0,10.75-.91C538.47,561.46,490.17,463.85,489.76,344.65Z" fill="#fff" opacity="0.6" />
@@ -58,15 +56,15 @@
                 <polygon points="503.09 598 625.42 598 625.42 593.5 497.09 593.5 497.09 626.5 503.09 626.5" fill="#fff" opacity="0.4" />
             </g>
         </svg>
-
+        {% comment %} <section class="hero-hae">
+          <h1>Winner!</h1>
+        </section> {% endcomment %}
         {% comment %} <object type= "image/svg+xml" data= "{% static 'auctions/images/price.svg' %}"
         class ="winner">
           winner-svg
         </object> {% endcomment %}
         {% endif %}
     {% endif %}
-    </div>
-
   <div class = "card-body">
     <h4 class "card-title">  {{ listing.title }}</h4>
       <p class="card-text">{{ listing.description }}</p>
