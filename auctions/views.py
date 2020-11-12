@@ -14,6 +14,7 @@ def index(request):
                   "auctions/index.html",
                   {
                       "listings": AuctionListing.objects.filter(active=True),
+                      # filter by auctions  won by this current user
                       "won_auctions":
                       AuctionListing.objects.filter(buyer=request.user.id)
                   })
@@ -66,7 +67,7 @@ def make_bid(request, id):
     error_msg = None
     posted_form = BidForm(request.POST)
     if posted_form.is_valid():
-    # if BidForm(request.POST).is_valid():
+        # if BidForm(request.POST).is_valid():
         user_making_bid = User.objects.get(pk=request.user.id)
         listing_to_buy = AuctionListing.objects.get(pk=id)
         bid_made_by_user = posted_form.cleaned_data["amount"]

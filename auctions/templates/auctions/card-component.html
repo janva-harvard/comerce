@@ -2,12 +2,12 @@
 <div class="card">
   {% if listing.image_url %}
         <img 
-          class="card-img-top {% if listing in won_auctions %}img-overlay {% endif %}"
+          class="card-img-top {% if listing in won_auctions and listing.buyer %}img-overlay {% endif %}"
           src="{{ listing.image_url }}"
           alt="product image titled {{ listing.title }}"
         />
       {% comment %} </div> {% endcomment %}
-        {% if listing in won_auctions %}
+        {% if listing in won_auctions and listing.buyer  %}
           <?xml version="1.0" encoding="UTF-8"?>
           <svg data-name="Layer 1" version="1.1" viewBox="0 0 1144 652.52"
          xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#"
