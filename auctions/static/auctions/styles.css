@@ -192,3 +192,9 @@ body {
     transform: translateY(150px);
   }
 } */
+/* ------------------------ forms ---------------------------- */
+.register-form {
+}
+.form-row {
+  border: 1px solid #092b36;
+}
