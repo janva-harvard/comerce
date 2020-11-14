@@ -32,6 +32,9 @@ body {
   margin-left: 40px;
   margin-right: 40px;
 }
+.register-page {
+  margin-top: 4rem;
+}
 .listing-header {
   text-align: center;
   padding-bottom: 20px;
@@ -100,8 +103,8 @@ body {
   top: -8px;
   content: url('images/euro.svg');
   background-size: 22px 22px;
-  height: 22px;
-  width: 22px;
+  height: 20px;
+  width: 20px;
   /* background-color: #092b36; */
   /* read up on  mask  */
   /* stroke: red; */
@@ -193,8 +196,49 @@ body {
   }
 } */
 /* ------------------------ forms ---------------------------- */
-.register-form {
+.register-form-wrapper {
+  border: 1px solid #b8bcc0;
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  color: white;
+
+  background: rgba(52, 59, 58, 0.9);
 }
-.form-row {
-  border: 1px solid #092b36;
+.register-form {
+  margin-bottom: 80px;
+  margin-top: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.register-img {
+  max-width: 100%;
+  margin-top: 30px;
+}
+
+.btn,
+.btn-primary {
+  color: #fff;
+  border-color: #f95c5c;
+  background-color: #a85c5c !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled):focus,
+.btn-primary:not(:disabled):not(.disabled):visited,
+.btn:not(:disabled):not(.disabled):active,
+.btn:not(:disabled):not(.disabled):focus,
+.btn:not(:disabled):not(.disabled):visited {
+  color: #fff;
+  background-color: #c56868 !important;
+  border-color: #b95c5c;
+}
+.btn-primary:hover {
+  border: 1px solid #7e4040;
+  border-color: #9e3434;
+  color: white;
+  background-color: #b95c5c !important;
+  text-decoration: none;
+  outline: none;
 }
