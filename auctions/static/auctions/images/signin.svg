@@ -35,16 +35,16 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="2488"
+     inkscape:window-width="1244"
      inkscape:window-height="1376"
      id="namedview180"
      showgrid="false"
      inkscape:zoom="0.58626984"
      inkscape:cx="113.74398"
      inkscape:cy="466.11787"
-     inkscape:window-x="72"
+     inkscape:window-x="1316"
      inkscape:window-y="27"
-     inkscape:window-maximized="1"
+     inkscape:window-maximized="0"
      inkscape:current-layer="f9eb83fe-2109-496c-8de2-d29751931755" />
   <defs
      id="defs9">
@@ -80,7 +80,7 @@
      fill="#6c63ff"
      opacity="0.1"
      transform="translate(-16.91 -47.46)"
-     style="fill:#a85c5c;fill-opacity:1" />
+     style="fill:#a85c5c;fill-opacity:1;opacity:0.1" />
   <path
      d="M1009.44,692.82s-12.29-8.11-24.47-2.34c0,0,3.75,7.22,19.17,6.54Z"
      transform="translate(-16.91 -47.46)"
