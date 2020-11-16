@@ -3,8 +3,8 @@
 
 <div class= "container col-md-10 d-flex " >
 <div class="d-flex "style=" border: 1px solid green" >
-  <div class="col-md-6 left-wrapper row "style="border: 1px solid blue">
-      <div class="detailed-img row cold-md-12 "style=" border: 1px solid red" >
+  <div class="col-md-6 left-wrapper row"style="border: 1px solid blue">
+      <div class="detailed-img  cold-md-12 "style=" border: 1px solid red" >
         {% if listing.image_url %}
         <img
           class="col-md-12 "
@@ -15,7 +15,7 @@
       </div>
 
 
-       <div class="row  col-md-12">
+       <div class="col-md-12 mt-auto">
           {% if listing.owner.id ==  user.id %}
             <form class= "" action="{% url 'listing' listing.id %}" method="post">
             {% csrf_token %}
@@ -25,13 +25,13 @@
             </form>
           {% endif %}
       </div>
-        <div class="row col-md-12  "  style="border:1px solid red "}>
+        <div class="col-md-12 mt-auto "  style="border:1px solid red "}>
          {% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
-            <form  class="col-md-12  align-self-end " style="border:1px solid #222222 " action="{% url 'watchlist' user.id %}" method= "post">
+            <form  class="col-md-12   " style="border:1px solid #222222 " action="{% url 'watchlist' user.id %}" method= "post">
             {% csrf_token %}
             {% if is_watched %}
             
-             <input  class="  p-3  align-self-stretch col-md-12 btn btn-primary  " type="submit" value="Unwatch">
+             <input  class="  p-3   col-md-12 btn btn-primary  " type="submit" value="Unwatch">
             {% else %}
               <input class=" p-3 col-md-12  btn btn-primary" type="submit" value="Watch">
             {% endif %}
