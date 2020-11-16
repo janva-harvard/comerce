@@ -149,8 +149,11 @@ def watchlist_view(request, id):
             watched_listing.save()
 
     return render(request, "auctions/watchlist.html", {
-        "listings": watchlsts
-    })
+        "listings": watchlsts,
+                  "won_auctions":
+                      AuctionListing.objects.filter(buyer=request.user.id)
+
+                  })
 
 
 def categories_view(request):

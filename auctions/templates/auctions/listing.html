@@ -1,55 +1,87 @@
 {% extends "auctions/layout.html" %} {% block body %}
-<h1>Listing</h1>
-<ul>
-  <li>{{ listing.title }}</li>
-  <li>{{ listing.description }}</li>
-  <li>{{ listing.starting_bid }}</li>
-  <li>{{ listing.owner }}</li>
-  <li>
-    {% if listing.image_url %}
-    <img
-      class="prod_image_small"
-      src="{{ listing.image_url }}"
-      alt="product image titled {{ listing.title }}"
-    />
+<h1 class="headers">Details</h1>
+
+<div class= "container col-md-10 d-flex " >
+<div class="d-flex "style=" border: 1px solid green" >
+  <div class="col-md-6 left-wrapper row "style="border: 1px solid blue">
+      <div class="detailed-img row cold-md-12 "style=" border: 1px solid red" >
+        {% if listing.image_url %}
+        <img
+          class="col-md-12 "
+          src="{{ listing.image_url }}"
+          alt="product image titled {{ listing.title }}"
+        />
+        {% endif %}
+      </div>
+
+
+       <div class="row  col-md-12">
+          {% if listing.owner.id ==  user.id %}
+            <form class= "" action="{% url 'listing' listing.id %}" method="post">
+            {% csrf_token %}
+              <input class="col-md-12  p-3 btn btn-primary " type="submit" value="Close auction">
+              <input type="hidden" name="closeauction" value='True' >
+              <input type="hidden" name="lst_id" value={{ listing.id }} >
+            </form>
+          {% endif %}
+      </div>
+        <div class="row col-md-12  "  style="border:1px solid red "}>
+         {% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
+            <form  class="col-md-12  align-self-end " style="border:1px solid #222222 " action="{% url 'watchlist' user.id %}" method= "post">
+            {% csrf_token %}
+            {% if is_watched %}
+            
+             <input  class="  p-3  align-self-stretch col-md-12 btn btn-primary  " type="submit" value="Unwatch">
+            {% else %}
+              <input class=" p-3 col-md-12  btn btn-primary" type="submit" value="Watch">
+            {% endif %}
+            <input type="hidden" name="lst_id" value={{ listing.id }} >
+            <input type="hidden" name="already_watched" value={{ is_watched }} >  
+            </form>
+        {% endif %}
+          </div>
+  </div>
+
+  <div class="col-md-5">
+    <h5>{{ listing.title }}</h5>
+    <h5>Description </h5>
+    <p>{{ listing.description }}</p>
+    <h5>Seller</h5>
+    <p>{{ listing.owner }}</p>
+
+    {% comment %} {{ listing.starting_bid }} {% endcomment %}
+  
+    {% if listing.active %}Active {% else %}This listing is inactive{% endif %}
+    <h5>Category</h5>
+    {% if listing.category %}{{ listing.category.name }} {% endif %}
+    <span>
+      Current highest bid: {{highest_bid}}
+    </span>
+
+
+    {% if error_msg != None %}
+    <div class="alert alert-danger">
+      {{ error_msg }}
+    </div>
     {% endif %}
-  </li>
-  <li>{% if listing.active %}Active {% else %}This listing is inactive{% endif %}</li>
-  <li>{% if listing.category %}{{ listing.category.name }} {% endif %}</li>
-</ul>
-Current highest bid: {{highest_bid}}
 
-
-{% if error_msg != None %}
-<div class="alert alert-danger">
-  {{ error_msg }}
+    <div class="row align-items-end">
+      <div class="col-md-12">
+        {% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
+          <form action="{% url 'listing' listing.id %}" method="post">
+              {% csrf_token %}
+              <div class="fieldWrapper">
+                <label for="amount">Amount</label>
+                {{ form.as_p}}
+              </div> 
+              <div class="fieldWrapper">
+                <input class="btn btn-primary col-md-12 p-3" type="submit" value="Place bid" />
+              </div>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  
+ </div>
 </div>
-{% endif %}
-
-{% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
-<form action="{% url 'listing' listing.id %}" method="post">
-  {% csrf_token %} {{ form.as_p }}
-  <input class="btn btn-primary" type="submit" value="Place bid" />
-</form>
-</div>
-
-<form action="{% url 'watchlist' user.id %}" method= "post">
-{% csrf_token %}
-  {% if is_watched %}
-  <input class="btn btn-primary" type="submit" value="UnWatch">
-{% else %}
-  <input class="btn btn-primary" type="submit" value="Watch">
-{% endif %}
-  <input type="hidden" name="lst_id" value={{ listing.id }} >
-  <input type="hidden" name="already_watched" value={{ is_watched }} >
-</form>
-{% endif %}
-{% if listing.owner.id ==  user.id %}
-<form action="{% url 'listing' listing.id %} " method="post">
-{% csrf_token %}
-  <input class="btn btn-primary" type="submit" value="Close auction">
-  <input type="hidden" name="closeauction" value='True' >
-  <input type="hidden" name="lst_id" value={{ listing.id }} >
-</form>
-{% endif %}
 {% endblock body %}

@@ -28,4 +28,8 @@ class NewListingsForm (forms.Form):
 
 
 class BidForm(forms.Form):
-    amount = forms.DecimalField(decimal_places=2, required=True, min_value=0.0)
+    amount = forms.DecimalField(decimal_places=2, required=True, min_value=0.0,
+                                widget=forms.TextInput(
+                                    attrs={
+                                        'class': 'form-control large-input-field'}
+                                ))

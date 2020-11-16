@@ -1,7 +1,14 @@
 {% extends 'auctions/layout.html' %} {% block body %}
-<h1>Watchlist</h1>
 
+<div class="main">
+<h1 class="headers">Watchlist</h1>
+<div class="card-columns">
 {% for listing in listings%}
+  {% include "auctions/card-component.html" %}
+{% endfor %}
+</div>
+
+{% comment %} {% for listing in listings%}
 <div>
   <ul>
     <li>{{ listing.title }}</li>
@@ -21,4 +28,7 @@
   </ul>
   <a href=" {% url 'listing' listing.id %}">Detailes</a>
 </div>
-{% endfor %} {% endblock body %}
+{% endfor %}  {% endcomment %}
+
+
+{% endblock body %}
