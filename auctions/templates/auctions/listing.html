@@ -25,7 +25,7 @@
             </form>
           {% endif %}
       </div>
-        <div class="col-md-12 mt-auto "  style="border:1px solid red "}>
+      <div class="col-md-12 mt-auto pr-0 pl-0"  style="border:1px solid red; "}>
          {% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
             <form  class="col-md-12   " style="border:1px solid #222222 " action="{% url 'watchlist' user.id %}" method= "post">
             {% csrf_token %}
@@ -39,10 +39,11 @@
             <input type="hidden" name="already_watched" value={{ is_watched }} >  
             </form>
         {% endif %}
-          </div>
-  </div>
+      </div>
+    </div>
 
-  <div class="col-md-5">
+  <div class="col-md-5 flex-column ">
+  <div class="wrapper justify-content-center">
     <h5>{{ listing.title }}</h5>
     <h5>Description </h5>
     <p>{{ listing.description }}</p>
@@ -54,6 +55,8 @@
     {% if listing.active %}Active {% else %}This listing is inactive{% endif %}
     <h5>Category</h5>
     {% if listing.category %}{{ listing.category.name }} {% endif %}
+  </div>
+
     <span>
       Current highest bid: {{highest_bid}}
     </span>
@@ -65,8 +68,8 @@
     </div>
     {% endif %}
 
-    <div class="row align-items-end">
-      <div class="col-md-12">
+    <div class="row align-items-end ">
+      <div class="col-md-12 ">
         {% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
           <form action="{% url 'listing' listing.id %}" method="post">
               {% csrf_token %}
