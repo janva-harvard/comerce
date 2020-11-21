@@ -72,7 +72,7 @@ def make_bid(request, id):
         listing_to_buy = AuctionListing.objects.get(pk=id)
         bid_made_by_user = posted_form.cleaned_data["amount"]
         highest_bid = highest_bid_for(listing_to_buy)
-
+        print("bidding ")
         # Do we already hold the highest bid
         # if highest_bid.bidder.id == user_making_bid.id:
         if biding_against_myself(user_making_bid, highest_bid):
