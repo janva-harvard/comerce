@@ -248,3 +248,50 @@ label {
 .large-input-field {
   padding: 1.8rem;
 }
+
+/* testing new stuff here */
+.box {
+  min-width: 200px;
+  min-height: 100px;
+}
+.my-form {
+  height: 4rem;
+}
+.my-btn {
+  height: 4rem;
+  width: 100%;
+}
+/*.wrapper >*{
+  flex: 1 100%  
+}*/
+.heading {
+  margin-left: auto;
+  margin-right: auto;
+}
+h1 {
+  margin-top: 20px;
+  text-align: center;
+  padding: 20px;
+}
+.description {
+  margin-bottom: 4rem;
+}
+.wrapper {
+  margin: auto;
+  margin-top: 2rem;
+  width: 60vw;
+  /*background-color: green;*/
+}
+.price-box {
+  padding: 3rem;
+}
+.price {
+  font-weight: bold;
+}
+
+.spacer-right {
+  margin-right: 20px;
+}
+.spacer-left {
+  margin-left: 20px;
+}

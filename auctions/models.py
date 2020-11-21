@@ -54,7 +54,7 @@ class Bid (models.Model):
                                related_name="bidders")
 
     def __str__(self):
-        return self.bidder.username + ', ' + self.for_listing.title+', ' + str(self.amount)
+        return str(self.amount)
 
 # class Comment(models.Model):
 #     """

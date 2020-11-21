@@ -1,37 +1,130 @@
 {% extends "auctions/layout.html" %} {% block body %}
-<h1 class="headers">Details</h1>
 
-<div class= "container col-md-10 d-flex " >
-<div class="d-flex "style=" border: 1px solid green" >
-  <div class="col-md-6 left-wrapper row"style="border: 1px solid blue">
-      <div class="detailed-img  cold-md-12 "style=" border: 1px solid red" >
-        {% if listing.image_url %}
+  {% if error_msg != None %}
+  <div class="alert alert-danger">
+    {{ error_msg }}
+  </div>
+  {% endif %}
+<h1 > Details</h1>
+  <div class="wrapper">
+    <div class="row ">  
+      <div class="d-flex col box  flex-column spacer-right">
+      {% if listing.image_url %}
         <img
-          class="col-md-12 "
           src="{{ listing.image_url }}"
           alt="product image titled {{ listing.title }}"
         />
         {% endif %}
       </div>
 
+      <div class="col box ">
+      <section class="description">
+        <h3>Description</h3>
+        <p>
+            {{ listing.description }}
+        </p>
+      </section>
+       <section class="seller">
+        <h3>Seller</h3>
+        <p>{{ listing.owner }}</p>
+       </section> 
+        <section class="active">
+        <h3>Active</h3>
+          {% if listing.active %}Active {% else %}This listing is inactive{% endif %}
+        </section>
 
-       <div class="col-md-12 mt-auto">
-          {% if listing.owner.id ==  user.id %}
-            <form class= "" action="{% url 'listing' listing.id %}" method="post">
-            {% csrf_token %}
-              <input class="col-md-12  p-3 btn btn-primary " type="submit" value="Close auction">
-              <input type="hidden" name="closeauction" value='True' >
-              <input type="hidden" name="lst_id" value={{ listing.id }} >
-            </form>
+        <section class="rest">
+          <h3>Category</h3>
+          {% if listing.category %}
+          <p>{{ listing.category.name }} </p>
           {% endif %}
+
+          <div class="price-box d-flex flex-row justify-content-end ">
+            <span class="price"> {{highest_bid}}</span>
+          </div>
+      </section>
       </div>
-      <div class="col-md-12 mt-auto pr-0 pl-0"  style="border:1px solid red; "}>
+    </div>
+    
+    <div class="row ">
+      <div class="d-flex col box  flex-column">
+        
+         {% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
+            <form class= "my-form mt-auto" action="{% url 'watchlist' user.id %}" method= "post">
+            {% comment %} <form  class="col-md-12   " style="border:1px solid #222222 " action="{% url 'watchlist' user.id %}" method= "post"> {% endcomment %}
+            {% csrf_token %}
+            {% if is_watched %}
+            
+             <input  class="  p-3   col-md-12 btn btn-primary " type="submit" value="Unwatch">
+            {% else %}
+              <input class=" p-3 col-md-12  btn btn-primary" type="submit" value="Watch">
+            {% endif %}
+            <input type="hidden" name="lst_id" value={{ listing.id }} >
+            <input type="hidden" name="already_watched" value={{ is_watched }} >  
+            </form>
+        {% endif %}
+        {% comment %} <form class= "my-form mt-auto" action="">
+         <input class="btn btn-primary my-btn " type="submit"value="Add to watchlist"> 
+        </form> {% endcomment %}
+      </div>
+      
+      <div class="col box spacer-left">
+        {% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
+        <form action="" class="d-flex flex-column">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            {{ form.amount}}
+          </div>
+          <input class="btn btn-primary my-btn" type="submit" value="Place bid" />      
+        </form>
+        {% endif %}
+        {% if listing.owner.id ==  user.id %}
+          <form  action="{% url 'listing' listing.id %}" method="post">
+          {% csrf_token %}
+            <input class="col-md-12  p-3 btn btn-primary " type="submit" value="Close auction">
+            <input type="hidden" name="closeauction" value='True' >
+            <input type="hidden" name="lst_id" value={{ listing.id }} >
+          </form>
+        {% endif %}
+       
+      </div>
+  </div>
+ </div>
+
+
+{% comment %} 
+<div class= "container col-md-8  mt-auto">
+<div class=" d-flex  " style=" border: 1px solid green;" >
+  <div class="col-md-6 left-wrapper row" style="border: 1px solid blue; ">
+      <div class="col-md-12" >
+        {% if listing.image_url %}
+        <img
+          class="col-md-12"
+          src="{{ listing.image_url }}"
+          alt="product image titled {{ listing.title }}"
+        />
+        {% endif %}
+      </div>
+      
+      <div class=" col-md-12 ">
+        {% if listing.owner.id ==  user.id %}
+          <form  action="{% url 'listing' listing.id %}" method="post">
+          {% csrf_token %}
+            <input class="col-md-12  p-3 btn btn-primary " type="submit" value="Close auction">
+            <input type="hidden" name="closeauction" value='True' >
+            <input type="hidden" name="lst_id" value={{ listing.id }} >
+          </form>
+        {% endif %}
+      </div>
+
+      <div class="col-md-12 mt-auto pr-0 pl-0" }>
          {% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
             <form  class="col-md-12   " style="border:1px solid #222222 " action="{% url 'watchlist' user.id %}" method= "post">
             {% csrf_token %}
             {% if is_watched %}
             
-             <input  class="  p-3   col-md-12 btn btn-primary  " type="submit" value="Unwatch">
+             <input  class="  p-3   col-md-12 btn btn-primary " type="submit" value="Unwatch">
             {% else %}
               <input class=" p-3 col-md-12  btn btn-primary" type="submit" value="Watch">
             {% endif %}
@@ -41,11 +134,13 @@
         {% endif %}
       </div>
     </div>
+{% comment %} right-hand side  {% endcomment %}
+  <div class="col-md-6 flex-column mr-auto ml-auto" style="border: 1px solid blue">
 
-  <div class="col-md-5 flex-column ">
-  <div class="wrapper justify-content-center">
-    <h5>{{ listing.title }}</h5>
+  <div class="" style="border: 1px solid green">
     <h5>Description </h5>
+
+    <h5>{{ listing.title }}</h5>
     <p>{{ listing.description }}</p>
     <h5>Seller</h5>
     <p>{{ listing.owner }}</p>
@@ -55,11 +150,11 @@
     {% if listing.active %}Active {% else %}This listing is inactive{% endif %}
     <h5>Category</h5>
     {% if listing.category %}{{ listing.category.name }} {% endif %}
-  </div>
 
     <span>
       Current highest bid: {{highest_bid}}
     </span>
+  </div>
 
 
     {% if error_msg != None %}
@@ -68,14 +163,14 @@
     </div>
     {% endif %}
 
-    <div class="row align-items-end ">
-      <div class="col-md-12 ">
+    <div  class="mt-auto" style="border: 1px solid red">
+      <div class="col-md-12  ">
         {% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
-          <form action="{% url 'listing' listing.id %}" method="post">
+          <form  action="{% url 'listing' listing.id %}" method="post">
               {% csrf_token %}
               <div class="fieldWrapper">
                 <label for="amount">Amount</label>
-                {{ form.as_p}}
+                {{ form.amount}}
               </div> 
               <div class="fieldWrapper">
                 <input class="btn btn-primary col-md-12 p-3" type="submit" value="Place bid" />
@@ -84,7 +179,6 @@
         {% endif %}
       </div>
     </div>
-  
  </div>
 </div>
-{% endblock body %}
+{% endblock body %} {% endcomment %}
