@@ -1,5 +1,6 @@
 {% extends "auctions/layout.html" %} {% block body %}
 <div class ="main">
+{% comment %} 
  {% if user.is_authenticated %}
  <h2 class="theme-color-dark-1 headers">Listings you won</h2>
 <div class="card-columns" >
@@ -7,7 +8,7 @@
   {% include "auctions/card-component.html" %}
  {% endfor %}
  </div>
- {% endif %}
+ {% endif %} {% endcomment %}
 
 <h2 class="headers">Active Listings</h2>
 <div class="card-columns">

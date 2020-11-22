@@ -8,11 +8,11 @@
 
 @font-face {
   font-family: montRegular;
-  src: url('/fonts/Montserrat/Montserrat-Regular.ttf');
+  src: url('./fonts/Montserrat/Montserrat-Regular.ttf');
 }
 @font-face {
   font-family: montBold;
-  src: url('/fonts/Montserrat/Montserrat-Bold.ttf');
+  src: url('./fonts/Montserrat/Montserrat-Bold.ttf');
 }
 @font-face {
   font-family: montMedium;
@@ -20,8 +20,15 @@
 }
 @font-face {
   font-family: montMediumItalic;
-  src: url('/fonts/Montserrat/Montserrat-MediumItalic.ttf');
+  src: url('./fonts/Montserrat/Montserrat-MediumItalic.ttf');
 }
+
+@font-face {
+  font-family: montThin;
+  font-weight: 200;
+  src: url('./fonts/Montserrat/Montserrat-ThinItalic.ttf');
+}
+
 body {
   padding-top: 140px;
   font-family: montMedium;
@@ -42,11 +49,16 @@ label {
 .headers {
   margin-bottom: 2.5rem;
   text-align: center;
+  font-family: montBold;
 }
 .register-page {
   margin-top: 4rem;
 }
-
+.bread-text {
+  font-family: montRegular;
+  color: #092b36;
+  font-style: italic;
+}
 .logo {
   text-align: center;
   margin-left: auto;
@@ -281,4 +293,7 @@ h1 {
 }
 .spacer-left {
   margin-left: 30px;
+}
+.spacer-top {
+  margin-top: 20px;
 }

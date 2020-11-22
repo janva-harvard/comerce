@@ -16,21 +16,23 @@
       <div class="col box ">
       <section class="description">
         <h3>Description</h3>
-        <p>
+        <p class= "bread-text">
             {{ listing.description }}
         </p>
       </section>
        <section class="seller">
-        <h3>Seller</h3>
-        <p>{{ listing.owner }}</p>
+        <h4>Seller</h4>
+        <p class="bread-text">{{ listing.owner }}</p>
        </section> 
         <section class="active">
-        <h3>Active</h3>
+        <h4 >Active</h4>
+          <p class= "bread-text">
           {% if listing.active %}Active {% else %}This listing is inactive{% endif %}
+          </p>
 
-          <h3>Category</h3>
+          <h4>Category</h4>
           {% if listing.category %}
-          <p>{{ listing.category.name }} </p>
+          <p class="bread-text">{{ listing.category.name }} </p>
           {% endif %}
 
           <div class="d-flex pt-5 flex-row justify-content-end ">
@@ -41,7 +43,7 @@
     </div>
     
     <div class="row ">
-      <div class="d-flex col box   flex-column">
+      <div class="d-flex col box  flex-column">
          {% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
             <form class= " mt-auto" action="{% url 'watchlist' user.id %}" method= "post">
             {% comment %} <form  class="col-md-12   " style="border:1px solid #222222 " action="{% url 'watchlist' user.id %}" method= "post"> {% endcomment %}
@@ -64,7 +66,6 @@
         {{ error_msg }}
         </div>
       {% endif %}
-
         {% if user.is_authenticated and listing.owner.id !=  user.id and  listing.active %}
         <form action="{% url 'listing' listing.id %}" method="post" class="d-flex flex-column">
           {% csrf_token %}
@@ -76,9 +77,9 @@
         </form>
         {% endif %}
         {% if listing.owner.id ==  user.id %}
-          <form  action="{% url 'listing' listing.id %}" method="post">
+          <form  action="{% url 'listing' listing.id %}" method="post" class="d-flex flex-column spacer-top">
           {% csrf_token %}
-            <input class="col-md-12  p-3 btn btn-primary " type="submit" value="Close auction">
+            <input class="  p-3 btn btn-primary " type="submit" value="Close auction">
             <input type="hidden" name="closeauction" value='True' >
             <input type="hidden" name="lst_id" value={{ listing.id }} >
           </form>
