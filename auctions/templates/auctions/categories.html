@@ -1,9 +1,21 @@
-{% extends 'auctions/layout.html' %} {% block body %}
+{% extends 'auctions/layout.html' %} 
+{% load static %}
+{% block body %}
 <h1>Filter by category</h1>
-{% for category in categories %}
-<ul>
-  <li>
-    <a href="{% url 'category_listing' category.id %}">{{ category }}</a>
-  </li>
+<div class= "d-flex p-3 ml-auto mr-auto  category-wrapper justify-content-center align-items-center " > 
+    <div class="spacer-right col " >
+          <img class="register-img" src="{% static 'auctions/images/filter.svg' %}" alt="filter image">
+    </div>
+
+    <div class="category-list-box d-flex flex-fill  justify-content-center"   >
+      <ul class="category-list ">
+       {% for category in categories %}
+      <li>
+       <a href="{% url 'category_listing' category.id %}">{{ category }}</a>
+      </li>
+  {% endfor %}
 </ul>
-{% endfor %} {% endblock body %}
+</div>
+
+</div></div>
+ {% endblock body %}

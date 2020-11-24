@@ -297,3 +297,17 @@ h1 {
 .spacer-top {
   margin-top: 20px;
 }
+
+.category-list {
+  font-size: larger;
+}
+.category-list-box {
+  /* background-color: rgba(30, 78, 122, 0.2); */
+  background-clip: padding-box;
+}
+.category-wrapper {
+  /* background-color: rgba(30, 78, 122, 0.2); */
+  margin: auto;
+  margin-top: 2rem;
+  width: 80vw;
+}
