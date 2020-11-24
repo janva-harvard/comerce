@@ -1,21 +1,11 @@
 {% extends "auctions/layout.html" %} {% block body %}
 <div class ="main">
-{% comment %} 
- {% if user.is_authenticated %}
- <h2 class="theme-color-dark-1 headers">Listings you won</h2>
-<div class="card-columns" >
- {% for listing in won_auctions %}
-  {% include "auctions/card-component.html" %}
- {% endfor %}
- </div>
- {% endif %} {% endcomment %}
-
-<h2 class="headers">Active Listings</h2>
-<div class="card-columns">
-{% for listing in listings%}
-  {% include "auctions/card-component.html" %}
-{% endfor %}
-</div>
+  <h2 class="headers">Active Listings</h2>
+  <div class="card-columns">
+  {% for listing in listings%}
+    {% include "auctions/card-component.html" %}
+  {% endfor %}
+  </div>
 </div>
 
  {% endblock %}
