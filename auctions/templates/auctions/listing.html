@@ -1,6 +1,6 @@
 {% extends "auctions/layout.html" %} {% block body %}
 
-
+{% load static %}
 <h1>Details</h1>
   <div class="wrapper">
     <div class="row ">  
@@ -9,6 +9,11 @@
         <img
           src="{{ listing.image_url }}"
           alt="product image titled {{ listing.title }}"
+        />
+        {% else %}
+        <img
+          src="{% static 'auctions/images/no-image.svg' %}"
+          alt="product image titled default image"
         />
         {% endif %}
       </div>
