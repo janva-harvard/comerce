@@ -1,11 +1,22 @@
 {% load static %}
 <div class="card">
-  {% if listing.image_url %}
+  {% if not listing.image_url %}
+        <img 
+          class="filler-img card-img-top {% if listing in won_auctions and listing.buyer %}img-overlay {% endif %}"
+          src="{% static 'auctions/images/no-image.svg' %}"
+          alt="product image titled {{ listing.title }}"
+        />
+    {% endif %}
+
+    {% if listing.image_url %}
         <img 
           class="card-img-top {% if listing in won_auctions and listing.buyer %}img-overlay {% endif %}"
           src="{{ listing.image_url }}"
           alt="product image titled {{ listing.title }}"
         />
+    {% endif %}
+
+        
       {% comment %} </div> {% endcomment %}
         {% if listing in won_auctions and listing.buyer  %}
           <?xml version="1.0" encoding="UTF-8"?>
@@ -60,7 +71,6 @@
         class ="winner">
           winner-svg
         </object> {% endcomment %}
-        {% endif %}
     {% endif %}
   <div class = "card-body">
     <h4 class "card-title">  {{ listing.title }}</h4>

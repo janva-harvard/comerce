@@ -76,10 +76,10 @@
           <input class="btn p-3 btn-primary " type="submit" value="Place bid" />      
         </form>
         {% endif %}
-        {% if listing.owner.id ==  user.id %}
+        {% if listing.owner.id ==  user.id and listing.active %}
           <form  action="{% url 'listing' listing.id %}" method="post" class="d-flex flex-column spacer-top">
           {% csrf_token %}
-            <input class="  p-3 btn btn-primary " type="submit" value="Close auction">
+            <input class="p-3 btn btn-primary " type="submit" value="Close auction">
             <input type="hidden" name="closeauction" value='True' >
             <input type="hidden" name="lst_id" value={{ listing.id }} >
           </form>
