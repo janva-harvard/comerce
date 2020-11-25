@@ -2,9 +2,13 @@
 <div class ="main">
   <h2 class="headers">Active Listings</h2>
   <div class="card-columns">
+  {% for listing in won_auctions %}
+    {% include "auctions/card-component.html" %}
+  {% endfor %}
   {% for listing in listings%}
     {% include "auctions/card-component.html" %}
   {% endfor %}
+
   </div>
 </div>
 

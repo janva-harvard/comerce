@@ -10,13 +10,17 @@ from .forms import NewListingsForm, BidForm
 
 
 def index(request):
+    winners = None
+    if(request.user.id):
+        winners = AuctionListing.objects.filter(buyer=request.user.id)
+
+    print(AuctionListing.objects.filter(buyer=request.user.id))
     return render(request,
                   "auctions/index.html",
                   {
                       "listings": AuctionListing.objects.filter(active=True),
                       # filter by auctions  won by this current user
-                      "won_auctions":
-                      AuctionListing.objects.filter(buyer=request.user.id)
+                      "won_auctions": winners
                   })
 
 
