@@ -14,7 +14,6 @@ def index(request):
     if(request.user.id):
         winners = AuctionListing.objects.filter(buyer=request.user.id)
 
-    print(AuctionListing.objects.filter(buyer=request.user.id))
     return render(request,
                   "auctions/index.html",
                   {
@@ -28,7 +27,7 @@ def category_listing_view(request, id):
     category = Category.objects.get(pk=id)
     return render(request,
                   "auctions/category_listing.html",
-                  {"listings": category.listings.all()})
+                  {"listings": category.listings.all().filter(active=True)})
 
 
 def highest_bid_for(listing):
