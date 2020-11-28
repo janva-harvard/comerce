@@ -13,7 +13,7 @@ class NewListingsForm (forms.Form):
                                   #   widget=forms.TextInput,
                                   widget=forms.Textarea(
                                       attrs={'class': 'form-control '}),
-                                  max_length=200,
+                                  max_length=500,
                                   required=True)
     starting_bid = forms.DecimalField(label="Starting bid",
                                       widget=forms.NumberInput(

@@ -198,8 +198,6 @@ def new_listing_view(request):
         return render(request,
                       "auctions/login.html")
 
-############################# implemented  before #############################
-
 
 def login_view(request):
     if request.method == "POST":

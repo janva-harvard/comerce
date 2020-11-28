@@ -19,7 +19,7 @@ class Category (models.Model):
 
 class AuctionListing(models.Model):
     title = models.CharField(max_length=50)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=500)
     starting_bid = models.DecimalField(max_digits=5, decimal_places=2)
     image_url = models.URLField(max_length=200, blank=True, default=None)
     active = models.BooleanField()
